@@ -29,11 +29,6 @@ public:
 
 		/*sprite0->*/SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
 	}
-
-//	void NextFrame() {
-//		if( motionVideo )
-//			motionVideo->NextFrame();
-//	}
 };
 
 
