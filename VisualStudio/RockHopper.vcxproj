@@ -38,12 +38,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\EventDispatcher;C:\Program Files %28x86%29\glm-0.9.6.1\glm;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\git\RockHopper\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -77,8 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Main.cpp" />
-    <ClCompile Include="..\src\Platforms\GNULinux\PlatformBootstrapper.cpp" />
-    <ClCompile Include="..\src\Platforms\RaspberryPi\PlatformBootstrapper.cpp" />
+    <ClCompile Include="..\src\Platforms\GNULinux\PlatformBootstrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\Platforms\RaspberryPi\PlatformBootstrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\Platforms\Win32\PlatformBootstrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Graphics\Abstract\Abstract.hpp" />
@@ -139,6 +147,9 @@
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\API\SocketInput.hpp" />
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\UserInterface.hpp" />
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\Window.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\Win32Window.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\UserInterface.hpp" />
     <ClInclude Include="..\src\UserInterface\Events\KeyEvents.hpp" />
     <ClInclude Include="..\src\UserInterface\Input.hpp" />
     <ClInclude Include="..\src\UserInterface\UserInterface.hpp" />
