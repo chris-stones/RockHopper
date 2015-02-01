@@ -147,7 +147,12 @@
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\API\SocketInput.hpp" />
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\UserInterface.hpp" />
     <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\Window.hpp" />
-    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\glcorearb.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\glext.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\wglext.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\PlatformHeaders.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\WGL\WGLContext.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\Win32Input.hpp" />
     <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\Win32Window.hpp" />
     <ClInclude Include="..\src\Platforms\Win32\UserInterface\UserInterface.hpp" />
     <ClInclude Include="..\src\UserInterface\Events\KeyEvents.hpp" />
