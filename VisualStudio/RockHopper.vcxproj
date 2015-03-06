@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4C7C326A-D1B9-47B7-B90E-B490AD978EF7}</ProjectGuid>
+    <RootNamespace>RockHopper</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\EventDispatcher;C:\Program Files %28x86%29\glm-0.9.6.1\glm;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\git\RockHopper\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\AUTHORS" />
+    <None Include="..\autogen.sh" />
+    <None Include="..\ChangeLog" />
+    <None Include="..\configure.ac" />
+    <None Include="..\COPYING" />
+    <None Include="..\INSTALL" />
+    <None Include="..\LICENSE" />
+    <None Include="..\NEWS" />
+    <None Include="..\README" />
+    <None Include="..\src\Makefile.am" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\Platforms\GNULinux\PlatformBootstrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\Platforms\RaspberryPi\PlatformBootstrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\Platforms\Win32\PlatformBootstrapper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Graphics\Abstract\Abstract.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Object.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\OperationVisitor.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Operation\Mesh.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Operation\Sprite.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Resource\Bitmap.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Resource\IResource.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Resource\MotionVideo.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Resource\Resource.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Alpha.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Enabled.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Projection.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Rotate.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Scale.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\State\Translate.hpp" />
+    <ClInclude Include="..\src\Graphics\Abstract\Visitor.hpp" />
+    <ClInclude Include="..\src\Graphics\Graphics.hpp" />
+    <ClInclude Include="..\src\Graphics\Node.hpp" />
+    <ClInclude Include="..\src\Graphics\Renderer\GraphicsAPI.hpp" />
+    <ClInclude Include="..\src\Graphics\Renderer\Renderer.hpp" />
+    <ClInclude Include="..\src\Graphics\Updatable.hpp" />
+    <ClInclude Include="..\src\Graphics\WidgetBase.hpp" />
+    <ClInclude Include="..\src\Graphics\Widgets.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\EGL\EGLContext.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\EGL\EGLDisplay.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\EGL\EGLScreen.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\EGL\EGLWindow.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Graphics.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\GraphicsAPI.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Mesh\Mesh.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Resource\Bitmap.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideo.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\BasicShader.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\KnibShader.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\ShaderBase.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\ShaderFactory.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\Shaders.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\Source\Source.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Shaders\YUV420PShader.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\Sprite\Sprite.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\TexPak\TexPak.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\TextureFactory.hpp" />
+    <ClInclude Include="..\src\Platforms\Common\Graphics\OpenGL\UsesTextureFactory.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\Media\Media.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\PlatformHeaders.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\GLX\GLXContext.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\GLX\GLXScreen.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\GLX\GLXWindow.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\X11Display.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\X11Input.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\API\X11Window.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\EGLWindowImplementation.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\GLXWindowImplementation.hpp" />
+    <ClInclude Include="..\src\Platforms\GNULinux\UserInterface\UserInterface.hpp" />
+    <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\API\EGLDisplay.hpp" />
+    <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\API\SocketInput.hpp" />
+    <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\UserInterface.hpp" />
+    <ClInclude Include="..\src\Platforms\RaspberryPi\UserInterface\Window.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\glcorearb.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\glext.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\opengl_org\GL\wglext.h" />
+    <ClInclude Include="..\src\Platforms\Win32\PlatformHeaders\PlatformHeaders.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\WGL\WGLContext.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\Win32Input.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\API\Win32Window.hpp" />
+    <ClInclude Include="..\src\Platforms\Win32\UserInterface\UserInterface.hpp" />
+    <ClInclude Include="..\src\UserInterface\Events\KeyEvents.hpp" />
+    <ClInclude Include="..\src\UserInterface\Input.hpp" />
+    <ClInclude Include="..\src\UserInterface\UserInterface.hpp" />
+    <ClInclude Include="..\src\UserInterface\Window.hpp" />
+    <ClInclude Include="..\src\UserInterface\WindowHints.hpp" />
+    <ClInclude Include="..\src\Util\Tree\TreeObject.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
