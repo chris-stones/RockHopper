@@ -4,7 +4,7 @@
 #include <knib_read.h>
 
 /*** https://github.com/chris-stones/libimg ***/
-#include <libimg.h>
+//#include <libimg.h>
 
 #include <Graphics/Graphics.hpp>
 

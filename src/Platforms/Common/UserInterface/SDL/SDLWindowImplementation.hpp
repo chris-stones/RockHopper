@@ -23,7 +23,7 @@ namespace RH {
 				WindowHints::KEY_EVENTS |
 				WindowHints::CLICK_EVENTS |
 				WindowHints::MOUSEMOVE_EVENTS,
-				0, 0,
+				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 				800, 600
 				);
 
@@ -48,7 +48,10 @@ namespace RH {
 				if (wh.IsFullScreen())
 					flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-				mainWindow = SDL_CreateWindow("RockHopper", wh.GetX(), wh.GetY(), wh.GetW(), wh.GetH(), flags);
+				mainWindow = SDL_CreateWindow("RockHopper", 
+					wh.GetX(),
+					wh.GetY(),
+					wh.GetW(), wh.GetH(), flags);
 				if (!mainWindow)
 					throw std::runtime_error("SDL_CreateWindow()==nullptr");
 

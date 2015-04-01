@@ -132,7 +132,7 @@ namespace RH { namespace Libs { namespace TexPak {
 				try {
 					return new Texture( handle, idx );
 
-				} catch( const std::exception & e) {
+				} catch( const std::exception &) {
 
 					rh_texpak_release(idx);
 					throw;
