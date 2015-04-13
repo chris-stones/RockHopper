@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(RockHopper, 0.1, chris.stones@gmail.com)
+AC_INIT(RockHopper, 0.1, chris.stones@zoho.com)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(src/Main.cpp)
 AC_CONFIG_HEADERS(src/config.h)
@@ -32,6 +32,7 @@ AC_ARG_WITH([gles], AS_HELP_STRING([--with-gles], [Use OpenGLES.]))
 AC_ARG_WITH([egl],  AS_HELP_STRING([--with-egl],  [Use EGL.]))
 AC_ARG_WITH([glx],  AS_HELP_STRING([--with-glx],  [Use GLX.]))
 AC_ARG_WITH([x11],  AS_HELP_STRING([--with-x11],  [Use X11.]))
+AC_ARG_WITH([SDL2], AS_HELP_STRING([--with-SDL2], [Use SDL2.]))
 
 #RASPBERY PI - Try to help the user as much as possible! 
 AC_ARG_WITH(
@@ -114,6 +115,18 @@ AS_IF([test "x$with_egl" = "xyes"],
     AC_MSG_ERROR([Unable to find EGL library (libEGL.so)]))
  
   AC_CHECK_HEADERS([EGL/egl.h],[],[AC_MSG_ERROR([Missing EGL/egl.h])])
+])
+
+AS_IF([test "x$with_SDL2" = "xyes"],
+[
+  AC_SEARCH_LIBS(
+    [SDL_Init],[SDL2],
+    [
+      AC_DEFINE([HAVE_SDL2],[1],[use SDL2])
+    ],
+    AC_MSG_ERROR([Unable to find SDL2 library (libSDL2.so)]))
+  
+  AC_CHECK_HEADERS([SDL2/SDL.h],[],[AC_MSG_ERROR([Missing SDL2/SDL.h])])
 ])
 
 AC_SEARCH_LIBS([rh_texpak_open],[rh_texture_loader],[],AC_MSG_ERROR([Unable to find rh_texture_loader library]))

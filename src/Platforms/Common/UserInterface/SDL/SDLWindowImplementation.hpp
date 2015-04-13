@@ -1,10 +1,12 @@
 #pragma once
 
+#if HAVE_SDL2
+
 #include <Libs/EventDispatcher/EventDispatcher.hpp>
 #include <UserInterface/Window.hpp>
 #include <UserInterface/Input.hpp>
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 class Input_ : public RH::UI::InputSubscriberBase {
 
@@ -182,3 +184,4 @@ namespace RH {
 	}
 }
 
+#endif /*** HAVE_SDL2 ***/

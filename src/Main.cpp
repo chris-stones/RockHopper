@@ -20,7 +20,8 @@ public:
 	{
 		bitmap =
 			//std::make_shared<RH::Graphics::Abstract::Bitmap>("sprite.tr");
-			std::make_shared<RH::Graphics::Abstract::Bitmap>("GAME/LowerMonitor/Base/baseLower.tr");
+			//std::make_shared<RH::Graphics::Abstract::Bitmap>("GAME/LowerMonitor/Base/baseLower.tr");
+			  std::make_shared<RH::Graphics::Abstract::Bitmap>("stallman.png");
 
 //		motionVideo =
 //			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
