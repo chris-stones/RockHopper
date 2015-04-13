@@ -7,8 +7,13 @@
 
 #include <EventDispatcher/EventDispatcher.hpp>
 
-namespace RH { namespace Libs {
+namespace RH { namespace Libs { namespace EventDispatcher {
 
-	namespace EventDispatcher = ED;
-}}
+	using ::EventDispatcher::ISubscription;
+	using ::EventDispatcher::DirectDispatcher;
+	using ::EventDispatcher::PipedDispatcher;
+	using ::EventDispatcher::BlockableDispatcher;
+	using ::EventDispatcher::ScopedBlock;
+
+}}}
 

@@ -10,8 +10,8 @@ namespace RH { namespace UI {
 class InputSubscriberBase
 {
 protected:
-  static Libs::EventDispatcher::EventSubscriptionManager	inputSubscriber;
-  static Libs::EventDispatcher::EventScheduleManager		inputScheduler;
+  static Libs::EventDispatcher::DirectDispatcher	inputSubscriber;
+
 
 public:
 	typedef  RH::UI::Events::KeyPressedEvent KeyPressedEvent;

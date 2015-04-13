@@ -1,13 +1,13 @@
 
 #pragma once
 
-class Input_ {
+class Input_ : public RH::UI::InputSubscriberBase {
 
 	Display * dpy;
 	Window window;
 	long xEventsMask;
 
-	static RH::Libs::EventDispatcher::EventPublicationManager eventPublicationManager;
+//	static RH::Libs::EventDispatcher::EventPublicationManager eventPublicationManager;
 
 	RH::UI::Events::keys ToKey(XKeyEvent * xkeyevent) {
 
@@ -61,7 +61,7 @@ class Input_ {
 	template<typename _T>
 	void PublishEvent(XKeyEvent * xkeyevent) {
 
-		eventPublicationManager.PublishEvent( _T(ToKey(xkeyevent)) );
+		inputSubscriber.Raise(_T(ToKey(xkeyevent)));
 	}
 
 public:
