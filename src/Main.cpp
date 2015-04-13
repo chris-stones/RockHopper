@@ -19,13 +19,14 @@ public:
 		:	RH::Graphics::UpdatedNode(NULL)
 	{
 		bitmap =
-			std::make_shared<RH::Graphics::Abstract::Bitmap>("sprite.tr");
+			//std::make_shared<RH::Graphics::Abstract::Bitmap>("sprite.tr");
+			std::make_shared<RH::Graphics::Abstract::Bitmap>("GAME/LowerMonitor/Base/baseLower.tr");
 
-		motionVideo =
-			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
+//		motionVideo =
+//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
 
 		sprite0 =
-			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo /*bitmap*/ );
+			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
 
 		/*sprite0->*/SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
 	}
@@ -44,7 +45,7 @@ class MyApplicaion
 	bool exitFlag {false};
 	bool playFlag {true};
 
-	RH::Libs::EventDispatcher::subscription_t keyPressedSubscription;
+	std::unique_ptr<RH::Libs::EventDispatcher::ISubscription> keyPressedSubscription;
 
 	MyScene myScene;
 
@@ -66,8 +67,8 @@ public:
 	void Run() {
 
 		keyPressedSubscription =
-				inputSubscriber.SubscribeEventTypeHandler<KeyPressedEvent>(
-						this, &MyApplicaion::OnKeyPressed );
+			inputSubscriber.Subscribe<KeyPressedEvent>(
+			[=](const KeyPressedEvent &ev) {this->OnKeyPressed(ev); });
 
 		while(!exitFlag) {
 

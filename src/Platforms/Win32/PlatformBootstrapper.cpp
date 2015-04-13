@@ -11,15 +11,8 @@
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
 
-// Instance of event dispatcher for UI input events.
-static RH::Libs::EventDispatcher::Manager inputEventDispatcherManager;
-
 // Initialise window input's event publisher interface.
-RH::Libs::EventDispatcher::EventPublicationManager Input_::eventPublicationManager = inputEventDispatcherManager.PublicationInterface();
-
-// Initialise UI's event subscriber / scheduler interface.
-RH::Libs::EventDispatcher::EventSubscriptionManager RH::UI::InputSubscriberBase::inputSubscriber = inputEventDispatcherManager.SubscriptionInterface();
-RH::Libs::EventDispatcher::EventScheduleManager RH::UI::InputSubscriberBase::inputScheduler = inputEventDispatcherManager.SchedulerInterface();
+RH::Libs::EventDispatcher::DirectDispatcher RH::UI::InputSubscriberBase::inputSubscriber;
 
 namespace RH {
 	namespace Platform {
