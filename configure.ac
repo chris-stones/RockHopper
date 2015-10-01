@@ -12,7 +12,6 @@ AC_CONFIG_MACRO_DIR([m4])
 #LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects])
 
-#AC_FUNC_MALLOC
 
 AC_CANONICAL_HOST
 case "$host" in
@@ -21,11 +20,10 @@ case "$host" in
   ;;
 *)
   platform="GNULinux"
-#  with_gl="yes"
-#  with_glx="yes"
-#  with_x11="yes"
   ;;
 esac
+
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 AC_ARG_WITH([gl],     AS_HELP_STRING([--with-gl],     [Use OpenGL.]))
 AC_ARG_WITH([gles],   AS_HELP_STRING([--with-gles],   [Use OpenGLES.]))
@@ -174,8 +172,6 @@ AS_IF([test "x$with_knib" = "xyes"],
 AM_CONDITIONAL([platform_GNULinux], [test "$platform" = "GNULinux"])
 AM_CONDITIONAL([platform_RaspberryPi], [test "$platform" = "RaspberryPi"])
 AM_CONDITIONAL([platform_Win32], [test "$platform" = "Win32"])
-
-CXXFLAGS="$CXXFLAGS -std=c++11"
 
 AC_PROG_CXX
 AC_PROG_INSTALL
