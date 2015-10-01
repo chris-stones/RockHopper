@@ -27,12 +27,14 @@ case "$host" in
   ;;
 esac
 
-AC_ARG_WITH([gl],   AS_HELP_STRING([--with-gl],   [Use OpenGL.]))
-AC_ARG_WITH([gles], AS_HELP_STRING([--with-gles], [Use OpenGLES.]))
-AC_ARG_WITH([egl],  AS_HELP_STRING([--with-egl],  [Use EGL.]))
-AC_ARG_WITH([glx],  AS_HELP_STRING([--with-glx],  [Use GLX.]))
-AC_ARG_WITH([x11],  AS_HELP_STRING([--with-x11],  [Use X11.]))
-AC_ARG_WITH([SDL2], AS_HELP_STRING([--with-SDL2], [Use SDL2.]))
+AC_ARG_WITH([gl],     AS_HELP_STRING([--with-gl],     [Use OpenGL.]))
+AC_ARG_WITH([gles],   AS_HELP_STRING([--with-gles],   [Use OpenGLES.]))
+AC_ARG_WITH([egl],    AS_HELP_STRING([--with-egl],    [Use EGL.]))
+AC_ARG_WITH([glx],    AS_HELP_STRING([--with-glx],    [Use GLX.]))
+AC_ARG_WITH([x11],    AS_HELP_STRING([--with-x11],    [Use X11.]))
+AC_ARG_WITH([SDL2],   AS_HELP_STRING([--with-SDL2],   [Use SDL2.]))
+AC_ARG_WITH([knib],   AS_HELP_STRING([--with-knib],   [Use Knib videos.]))
+AC_ARG_WITH([theora], AS_HELP_STRING([--with-theora], [Use Theora videos.]))
 
 #RASPBERY PI - Try to help the user as much as possible! 
 AC_ARG_WITH(
@@ -144,16 +146,30 @@ AC_CHECK_HEADERS(
 	]
 )
 
-AC_SEARCH_LIBS([knib_open_file],[knib_read],[],AC_MSG_ERROR([Unable to find knib_reader library]))
-AC_CHECK_HEADERS(
-	[knib_read.h],
-	[],
-	[AC_MSG_ERROR([Missing knib_read.h])],
-	[
-		#include<stdlib.h>
-		#include<stddef.h>
-	]
-)
+AS_IF([test "x$with_knib" = "xyes"],
+[
+	AC_DEFINE([HAVE_KNIB_VIDEO],[1],[use libknib_read for motion video support.])
+	AC_SEARCH_LIBS([knib_open_file],[knib_read],[],AC_MSG_ERROR([Unable to find knib_reader library]))
+	AC_CHECK_HEADERS(
+		[knib_read.h],
+		[],
+		[AC_MSG_ERROR([Missing knib_read.h])],
+		[
+			#include<stdlib.h>
+			#include<stddef.h>
+		])
+])
+
+# TODO: Check fails due to c++11...
+#AC_LANG_PUSH([C++])
+#AC_CHECK_HEADERS(
+#	[EventDispatcher/EventDispatcher.hpp],
+#	[],
+#	[AC_MSG_ERROR([Missing EventDispatcher/EventDispatcher.hpp])],
+#	[
+#	]
+#)
+#AC_LANG_POP([C++])
 
 AM_CONDITIONAL([platform_GNULinux], [test "$platform" = "GNULinux"])
 AM_CONDITIONAL([platform_RaspberryPi], [test "$platform" = "RaspberryPi"])

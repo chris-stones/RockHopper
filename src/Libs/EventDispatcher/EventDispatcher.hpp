@@ -5,6 +5,7 @@
 
 #pragma once
 
+/* https://github.com/chris-stones/EventDispatcher.git */
 #include <EventDispatcher/EventDispatcher.hpp>
 
 namespace RH { namespace Libs { namespace EventDispatcher {
