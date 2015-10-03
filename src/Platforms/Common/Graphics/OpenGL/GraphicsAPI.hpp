@@ -185,8 +185,8 @@ public:
 
 	virtual void Visit( Abstract::Mesh * mesh) {
 
-		Abstract::Mesh::Impl * meshImpl =
-			mesh->GetImpl();
+//		Abstract::Mesh::Impl * meshImpl =
+//			mesh->GetImpl();
 
 		GL_ERROR();
 	}

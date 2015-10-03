@@ -19,8 +19,6 @@ public:
 		:	RH::Graphics::UpdatedNode(NULL)
 	{
 		bitmap =
-			//std::make_shared<RH::Graphics::Abstract::Bitmap>("sprite.tr");
-			//std::make_shared<RH::Graphics::Abstract::Bitmap>("GAME/LowerMonitor/Base/baseLower.tr");
 			  std::make_shared<RH::Graphics::Abstract::Bitmap>("stallman.png");
 
 //		motionVideo =
@@ -29,7 +27,7 @@ public:
 		sprite0 =
 			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
 
-		/*sprite0->*/SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
+		SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
 	}
 };
 
@@ -70,6 +68,8 @@ public:
 		keyPressedSubscription =
 			inputSubscriber.Subscribe<KeyPressedEvent>(
 			[=](const KeyPressedEvent &ev) {this->OnKeyPressed(ev); });
+
+//		myScene.SetEnabled(false);
 
 		while(!exitFlag) {
 

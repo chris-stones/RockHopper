@@ -3,6 +3,8 @@
 
 #include<memory>
 
+#include "Node.hpp"
+
 namespace RH { namespace Graphics {
 
 class IUpdatable {
