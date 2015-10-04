@@ -11,6 +11,7 @@ class Alpha;
 class Scale;
 class Rotate;
 class Translate;
+class Update;
 class Sprite;
 class Bitmap;
 class MotionVideo;
@@ -25,6 +26,7 @@ public:
 	virtual void Visit(Scale * scale) = 0;
 	virtual void Visit(Rotate * rotate) = 0;
 	virtual void Visit(Translate * translate) = 0;
+	virtual void Visit(Update * update) = 0;
 
 	virtual void Visit(Sprite * sprite) = 0;
 

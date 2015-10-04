@@ -40,9 +40,9 @@ public:
 		GL_ERROR();
 		windowImpl->MakeContextCurrent();
 		GL_ERROR();
-//		glClearColor(1.0f,0.0f,1.0f,1.0f);
-//		GL_ERROR();
-//		glClear( GL_COLOR_BUFFER_BIT );
+		glClearColor(1.0f,0.0f,1.0f,1.0f);
+		GL_ERROR();
+		glClear( GL_COLOR_BUFFER_BIT );
 		GL_ERROR();
 	}
 

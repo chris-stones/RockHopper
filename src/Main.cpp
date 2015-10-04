@@ -18,14 +18,14 @@ public:
 	MyScene()
 		:	RH::Graphics::UpdatedNode(NULL)
 	{
-		bitmap =
-			  std::make_shared<RH::Graphics::Abstract::Bitmap>("stallman.png");
+//		bitmap =
+//			  std::make_shared<RH::Graphics::Abstract::Bitmap>("base.png");
 
-//		motionVideo =
-//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
+		motionVideo =
+			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
 
 		sprite0 =
-			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
+			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo /*bitmap*/ );
 
 		SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
 	}
@@ -76,10 +76,6 @@ public:
 			window.DispatchInputEvents();
 
 			renderer.Render(&myScene, &window);
-
-			if(playFlag)
-				myScene.UpdateAll();
-				//myScene.NextFrame();
 		}
 	}
 };

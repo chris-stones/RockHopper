@@ -49,6 +49,15 @@ public:
 		if(object->Get())
 			object->PropagateToChildren(this);
 	}
+
+	virtual void Visit(Abstract::Update * object) {
+
+		if(object->Get()) {
+			object->Get()->UpdateNode();
+			object->PropagateToChildren(this);
+		}
+	}
+
 	virtual void Visit(Abstract::Alpha * object) {
 
 		Stack<AlphaStack> stackOp(alphaStack,

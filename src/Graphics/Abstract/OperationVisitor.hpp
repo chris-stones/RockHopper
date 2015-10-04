@@ -11,6 +11,7 @@ class OperationVisitor : public IVisitor {
 	virtual void Visit(Scale * scale) {}
 	virtual void Visit(Rotate * rotate) {}
 	virtual void Visit(Translate * translate) {}
+	virtual void Visit(Update * update) {}
 };
 
 }}}

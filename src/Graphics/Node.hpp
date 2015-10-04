@@ -4,6 +4,7 @@
 #include "Abstract/Object.hpp"
 #include "Abstract/State/Alpha.hpp"
 #include "Abstract/State/Enabled.hpp"
+#include "Abstract/State/Update.hpp"
 #include "Abstract/State/Rotate.hpp"
 #include "Abstract/State/Scale.hpp"
 #include "Abstract/State/Translate.hpp"
@@ -41,6 +42,7 @@ private:
 
 	///// RENDER SCENE GRAPH /////////
 	std::unique_ptr<Abstract::Object>     sgHead;		// Top of this nodes scene graph. ( parent references this )
+	std::unique_ptr<Abstract::Update>     sgUpdate;     // Optional - update updateable nodes.
 	std::unique_ptr<Abstract::Projection> sgProjection; // Optional - new projection matrix.
 	std::unique_ptr<Abstract::Enabled> 	  sgEnabled;	// Optional - enable / disable children.
 	std::unique_ptr<Abstract::Alpha>      sgAlpha;		// Optional - change alpha of children.
@@ -201,9 +203,10 @@ private:
 	void UpdateSceneGraph() {
 
 		std::vector<Abstract::Object*> obj;
-		obj.reserve(8);
+		obj.reserve(9);
 		obj.push_back(sgHead.get());
 		if(sgEnabled) obj.push_back(sgEnabled.get());
+		if(sgUpdate) obj.push_back(sgUpdate.get());
 		if(sgProjection) obj.push_back(sgProjection.get());
 		if(sgAlpha) obj.push_back(sgAlpha.get());
 		if(sgScale) obj.push_back(sgScale.get());
@@ -231,8 +234,13 @@ private:
 	// 2D nodes will want to be placed on screen relative to their top-lefts.
 	glm::vec3 alignment_correction;
 
-public:
+protected:
+	void SetUpdatedNode(IUpdatedNode* updatedNode) {
 
+		Set(sgUpdate,updatedNode);
+	}
+
+public:
 	/////////////////////// ENABLE / DISABLE THIS NODE /////////////////////////
 	void SetEnabled(bool enabled) {
 

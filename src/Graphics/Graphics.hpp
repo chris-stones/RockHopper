@@ -6,6 +6,7 @@
 
 #include <Libs/GLM/glm.hpp>
 
+#include "IUpdatedNode.hpp"
 #include "Updatable.hpp"
 
 #include "Abstract/Abstract.hpp"

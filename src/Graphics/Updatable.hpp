@@ -13,15 +13,15 @@ public:
 	virtual void Update() = 0;
 };
 
-class UpdatedNode : public Node {
-
+class UpdatedNode
+	: public Node,
+	  public IUpdatedNode
+{
 	// NOTE: modified during iteration.
 	//	Must use a container that does not invalidate iterators on insertion.
-	typedef std::list<UpdatedNode*> UpdatedNodeContainer;
 	typedef std::list<IUpdatable*>	UpdatableContainer;
 	////////////////////////////////////////
 
-	UpdatedNodeContainer updatedChildren;
 	UpdatableContainer updatables;
 
 public:
@@ -52,21 +52,11 @@ public:
 	UpdatedNode(Node * node)
 		:	Node(node)
 	{
-		UpdatedNode * un = GetFirstAncestorOfType<UpdatedNode>();
-		if(un)
-			un->updatedChildren.push_back(this);
+		this->SetUpdatedNode(this);
 	}
 
 	virtual ~UpdatedNode() {
 
-		UpdatedNode * un = GetFirstAncestorOfType<UpdatedNode>();
-
-		if(un) {
-			// Unregister this Node with parent
-			auto itor = std::find(un->updatedChildren.begin(), un->updatedChildren.end(), this);
-			if( itor != un->updatedChildren.end())
-				*itor = nullptr; // DON'T erase from container. UpdateAll() may be iterating over it!
-		}
 	}
 
 private:
@@ -75,12 +65,6 @@ private:
 
 		if(value)
 			value->Update();
-	}
-
-	void Update(UpdatedNodeContainer::value_type & value) {
-
-		if(value)
-			value->UpdateAll();
 	}
 
 	template<typename _T>
@@ -108,10 +92,9 @@ private:
 	}
 
 public:
-	void UpdateAll() {
+	virtual void UpdateNode() override {
 
 		UpdateInContainer( updatables );
-		UpdateInContainer( updatedChildren );
 	}
 };
 
