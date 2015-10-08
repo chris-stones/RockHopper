@@ -5,29 +5,110 @@
 #include <Platforms/PlatformBootstrapper.hpp>
 #include <stdio.h>
 #include <memory>
+#include <math.h>
+
+
+class VisualEffect
+	:	public RH::Graphics::Updatable,
+		public RH::Libs::EventDispatcher::DirectDispatcher
+{
+public:
+
+	VisualEffect(RH::Graphics::UpdatedNode * parent)
+		:	RH::Graphics::Updatable(parent)
+	{}
+};
+
+class PulseEffect
+	:	public VisualEffect
+{
+	float f {0.0f};
+	int frame {0};
+
+	std::weak_ptr<RH::Graphics::Node> node0;
+	std::weak_ptr<RH::Graphics::Node> node1;
+
+	bool finished {false};
+
+public:
+
+	class PulseFinishedEvent {};
+
+	PulseEffect(
+			RH::Graphics::UpdatedNode * parent,
+			std::weak_ptr<RH::Graphics::Node> node0,
+			std::weak_ptr<RH::Graphics::Node> node1)
+		:	VisualEffect(parent),
+			node0(node0),
+			node1(node1)
+	{
+	}
+
+	virtual void Update() override {
+
+		if(!finished) {
+
+			f+=0.02;
+//			node0.lock()->SetScale( 1.0f + sin(f) * 0.5 );
+//			node1.lock()->SetScale( 1.0f + sin(f) * 0.5 );
+
+			parent->SetScale( 1.0f + sin(f) * 0.5 );
+
+			if(++frame >= 180) {
+				finished = true;
+				this->Raise( PulseFinishedEvent() );
+			}
+		}
+	}
+};
+
+
 
 class MyScene
 	:	public RH::Graphics::UpdatedNode
 {
 	std::shared_ptr<RH::Graphics::SpriteNode> sprite0;
+	std::shared_ptr<RH::Graphics::SpriteNode> sprite1;
 
 	std::shared_ptr<RH::Graphics::Abstract::Bitmap> bitmap;
 	std::shared_ptr<RH::Graphics::Abstract::MotionVideo> motionVideo;
+
+	std::shared_ptr<PulseEffect> pulseEffect;
+	std::unique_ptr<RH::Libs::EventDispatcher::ISubscription> pulseSubscription;
 
 public:
 	MyScene()
 		:	RH::Graphics::UpdatedNode(NULL)
 	{
-//		bitmap =
-//			  std::make_shared<RH::Graphics::Abstract::Bitmap>("base.png");
+		bitmap =
+			  std::make_shared<RH::Graphics::Abstract::Bitmap>("base.png");
+
+//		motionVideo =
+//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
 
 		motionVideo =
-			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
+			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.ogg");
 
-		sprite0 =
-			MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo /*bitmap*/ );
+		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo );
+//		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
+//		sprite1 = MakeExported<RH::Graphics::SpriteNode>( "sprite1", this, /*motionVideo*/ bitmap );
 
-		SetProjection( glm::ortho(0.0f, 1920.0f, 1080.0f, 0.0f) );
+		SetProjection( glm::ortho(0.0f, 1920.0f * 2.0f, 1080.0f * 2.0f, 0.0f) );
+//		sprite1->SetTranslation(glm::vec3(1920.0f, 1080.0f, 0.0f));
+
+		/*
+		pulseEffect = std::make_shared<PulseEffect>(this, sprite0, sprite1);
+
+		pulseSubscription =
+			pulseEffect->Subscribe<PulseEffect::PulseFinishedEvent>(
+				[=](const PulseEffect::PulseFinishedEvent &ev){this->OnFinishedPulsing(ev);});
+		*/
+
+	}
+
+	void OnFinishedPulsing(const PulseEffect::PulseFinishedEvent &event) {
+
+		printf("finishedPulsing\n");
 	}
 };
 

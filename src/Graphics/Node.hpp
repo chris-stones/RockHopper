@@ -207,11 +207,16 @@ private:
 		obj.push_back(sgHead.get());
 		if(sgEnabled) obj.push_back(sgEnabled.get());
 		if(sgUpdate) obj.push_back(sgUpdate.get());
-		if(sgProjection) obj.push_back(sgProjection.get());
+
+//	if(sgProjection) obj.push_back(sgProjection.get());
+
 		if(sgAlpha) obj.push_back(sgAlpha.get());
-		if(sgScale) obj.push_back(sgScale.get());
-		if(sgRotate) obj.push_back(sgRotate.get());
 		if(sgTranslate) obj.push_back(sgTranslate.get());
+		if(sgRotate) obj.push_back(sgRotate.get());
+		if(sgScale) obj.push_back(sgScale.get());
+
+	if(sgProjection) obj.push_back(sgProjection.get());
+
 		obj.push_back(sgTail.get());
 		for(uint32_t i = 0; i<obj.size()-1; i++)
 			obj[i]->SetOnlyChild(obj[i+1]);

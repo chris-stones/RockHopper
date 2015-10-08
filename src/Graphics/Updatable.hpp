@@ -100,6 +100,7 @@ public:
 
 class Updatable : public IUpdatable
 {
+protected:
 	UpdatedNode * parent;
 
 public:

@@ -158,6 +158,17 @@ AS_IF([test "x$with_knib" = "xyes"],
 		])
 ])
 
+AS_IF([test "x$with_theora" = "xyes"],
+[
+	AC_CHECK_HEADERS([ogg/ogg.h],[],[AC_MSG_ERROR([Missing ogg/ogg.h])])
+	AC_CHECK_HEADERS([theora/theoradec.h],[],[AC_MSG_ERROR([Missing theora/theoradec.h])])
+	
+	AC_SEARCH_LIBS([ogg_sync_init],[ogg],[],AC_MSG_ERROR([Unable to find libogg library]))
+	AC_SEARCH_LIBS([th_decode_headerin],[theoradec],[],AC_MSG_ERROR([Unable to find libogg library]))
+	
+	AC_DEFINE([HAVE_THEORA_VIDEO],[1],[use libtheora and libogg for motion video support.])
+])
+
 # TODO: Check fails due to c++11...
 #AC_LANG_PUSH([C++])
 #AC_CHECK_HEADERS(
