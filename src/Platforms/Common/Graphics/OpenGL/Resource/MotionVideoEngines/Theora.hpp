@@ -29,7 +29,8 @@ class MotionVideo::Impl {
 			th_comment_init(&mComment);
 		}
 		~TheoraDecode() {
-			th_setup_free(mSetup);
+			th_comment_clear(&mComment);
+			th_info_clear(&mInfo);
 			th_decode_free(mCtx);
 		}
 	};
@@ -37,10 +38,19 @@ class MotionVideo::Impl {
 	struct OggStream {
 	  ogg_stream_state mState;
 	  TheoraDecode mTheora;
+	  bool initilaised{false};
 
-	  OggStream() {
-		  memset(&mState,  0, sizeof mState);
-		  memset(&mTheora, 0, sizeof mTheora);
+	  OggStream() {}
+
+	  void Init(int serial) {
+		  int e = ogg_stream_init(&mState, serial);
+		  assert(e==0);
+		  initilaised=true;
+	  }
+
+	  ~OggStream() {
+		  if(initilaised)
+			  ogg_stream_clear(&mState);
 	  }
 	};
 	std::map<int, OggStream> oggStreamMap;
@@ -139,9 +149,7 @@ class MotionVideo::Impl {
 
 		while(ogg_sync_pageout(state, p_ogg_page) != 1) {
 
-		  int size = 4096;
-
-//		  size = 64;// HACK
+		  int size = 256;
 
 		  char* buffer = ogg_sync_buffer(state, 4096);
 
@@ -171,13 +179,10 @@ class MotionVideo::Impl {
 
 			int serial = ogg_page_serialno(page);
 
-			OggStream & oggStream = this->oggStreamMap[serial];
+			if(this->oggStreamMap.find(serial)==this->oggStreamMap.end())
+				this->oggStreamMap[serial].Init(serial);
 
-			if (ogg_page_bos(page)) {
-				printf("read_ogg_packet BOS\n");
-				int e = ogg_stream_init(&oggStream.mState, serial);
-				assert(e==0);
-			}
+			OggStream & oggStream = this->oggStreamMap[serial];
 
 			int ret = ogg_stream_pagein(&oggStream.mState, page);
 			assert(ret==0);
@@ -238,12 +243,12 @@ public:
 				}
 				else if (ret==0) {
 
-				  printf("Allocate decoder\n");
-
 				  oggStream.mTheora.mCtx =
 					th_decode_alloc(
 						&oggStream.mTheora.mInfo,
 						oggStream.mTheora.mSetup);
+
+				  th_setup_free(oggStream.mTheora.mSetup);
 
 				  if(!this->ogg_stream_serial)
 					  this->ogg_stream_serial = serial;
@@ -285,6 +290,7 @@ public:
 	~Impl() {
 
 		fclose(this->file);
+		ogg_sync_clear(&ogg_state);
 
 		glDeleteTextures(3, textures);
 	}
