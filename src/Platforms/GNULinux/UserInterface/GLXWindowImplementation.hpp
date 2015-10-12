@@ -31,7 +31,7 @@ static const WindowHints & _getDefaultWindowHints() {
 			WindowHints::CLICK_EVENTS |
 			WindowHints::MOUSEMOVE_EVENTS,
 			0,0,
-			800,600
+			1920,1080
 	);
 
 	return defaultWindowHints;

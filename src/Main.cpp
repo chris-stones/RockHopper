@@ -3,6 +3,10 @@
 #include <UserInterface/Input.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Platforms/PlatformBootstrapper.hpp>
+
+#include <Libs/Concurrency/Concurrency.hpp>
+#include <Libs/IoCC/IoCC.hpp>
+
 #include <stdio.h>
 #include <memory>
 #include <math.h>
@@ -65,7 +69,8 @@ public:
 
 
 class MyScene
-	:	public RH::Graphics::UpdatedNode
+	:	public RH::Graphics::UpdatedNode,
+		public RH::Libs::IoCCBase
 {
 	std::shared_ptr<RH::Graphics::SpriteNode> sprite0;
 	std::shared_ptr<RH::Graphics::SpriteNode> sprite1;
@@ -86,14 +91,19 @@ public:
 //		motionVideo =
 //			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
 
+		const char * str = "mv.ogg";
 		motionVideo =
-			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.ogg");
+			IoCCBase::container.New<RH::Graphics::Abstract::MotionVideo>(
+				static_cast<RH::Graphics::UpdatedNode*>(this), str);
+
+//		motionVideo =
+//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.ogg");
 
 		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo );
 //		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
 //		sprite1 = MakeExported<RH::Graphics::SpriteNode>( "sprite1", this, /*motionVideo*/ bitmap );
 
-		SetProjection( glm::ortho(0.0f, 1920.0f * 2.0f, 1080.0f * 2.0f, 0.0f) );
+		SetProjection( glm::ortho(0.0f, 1920.0f * 1.0f, 1080.0f * 1.0f, 0.0f) );
 //		sprite1->SetTranslation(glm::vec3(1920.0f, 1080.0f, 0.0f));
 
 		/*
@@ -161,7 +171,45 @@ public:
 	}
 };
 
+class IOCCSetup : public RH::Libs::IoCCBase {
+
+	void CreateVideoDecodeJobQueue(int threads) {
+
+		// Create a job queue for motion videos.
+		std::shared_ptr<RH::Libs::Concurrency::ConcurrentJobQueue> concurrentJobQueue =
+			std::make_shared<RH::Libs::Concurrency::ConcurrentJobQueue>(threads);
+
+		// Store a copy in the container.
+		this->container.Store<RH::Libs::Concurrency::IConcurrentJobQueue>(
+			"video job queue",
+			concurrentJobQueue);
+
+
+		// Register instantiator with container.
+		this->container.RegisterInstantiator
+			<std::shared_ptr<RH::Graphics::Abstract::MotionVideo>(RH::Graphics::UpdatedNode*, const char *)>(
+
+				[&](RH::Graphics::UpdatedNode * node, const char * s)
+				{
+					return std::make_shared<RH::Graphics::Abstract::MotionVideo>(
+							node, s,
+							this->container.Retrieve<RH::Libs::Concurrency::IConcurrentJobQueue>("video job queue"));
+				}
+
+			);
+	}
+
+public:
+
+	void Setup() {
+
+		CreateVideoDecodeJobQueue(1);
+	}
+};
+
 int main() {
+
+	IOCCSetup().Setup();
 
 	MyApplicaion myApp;
 

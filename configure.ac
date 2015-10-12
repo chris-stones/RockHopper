@@ -169,6 +169,14 @@ AS_IF([test "x$with_theora" = "xyes"],
 	AC_DEFINE([HAVE_THEORA_VIDEO],[1],[use libtheora and libogg for motion video support.])
 ])
 
+AX_PTHREAD(
+  [
+    LIBS="$PTHREAD_LIBS $LIBS"
+    CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+    CXXFLAGS="$CXXFLAGS $PTHREAD_CFLAGS"
+  ],
+  [AC_MSG_ERROR([No pthreads!?])])
+
 # TODO: Check fails due to c++11...
 #AC_LANG_PUSH([C++])
 #AC_CHECK_HEADERS(

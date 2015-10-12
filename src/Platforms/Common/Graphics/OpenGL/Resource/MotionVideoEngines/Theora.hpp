@@ -1,15 +1,19 @@
 #pragma once
 
 #include <Graphics/Graphics.hpp>
+#include <Libs/Concurrency/IConcurrentJob.hpp>
+#include <Libs/Concurrency/IConcurrentJobQueue.hpp>
 #include <stdexcept>
 #include <map>
 
 #include <ogg/ogg.h>
 #include <theora/theoradec.h>
 
+#include <mutex>
+
 namespace RH { namespace Graphics { namespace Abstract {
 
-class MotionVideo::Impl {
+class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob {
 
 	FILE * file {nullptr};
 	ogg_sync_state ogg_state;
@@ -17,6 +21,12 @@ class MotionVideo::Impl {
 	GLuint textures[3];
 	int w{0};
 	int h{0};
+	th_ycbcr_buffer codec_buffer;
+	std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue;
+
+	std::mutex mutex;
+	bool decode_in_progress {false};
+	bool frame_is_ready {false};
 
 	struct TheoraDecode {
 		th_info mInfo;
@@ -208,12 +218,17 @@ class MotionVideo::Impl {
 
 public:
 
-	Impl(const std::string & s) {
+	std::shared_ptr<Impl> sthis; // FIXME: ugly!
+
+	Impl(const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue)
+		:	concurrentJobQueue(concurrentJobQueue)
+	{
 
 		if((this->file = fopen(s.c_str(), "rb"))==nullptr)
 			throw std::runtime_error("fopen error.");
 
 		memset(textures, 0, sizeof textures);
+		memset(codec_buffer, 0, sizeof codec_buffer);
 
 		int e = ogg_sync_init(&ogg_state);
 		assert(e==0);
@@ -266,14 +281,13 @@ public:
 
 					assert(ret==0);
 
-					th_ycbcr_buffer buffer;
-					ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, buffer);
+					ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, this->codec_buffer);
 
 					assert(ret==0);
 
 					if(ret == 0) {
-						CreateTextures(buffer);
-						UpdateTextures(buffer);
+						CreateTextures(this->codec_buffer);
+						UpdateTextures(this->codec_buffer);
 					}
 				  }
 
@@ -295,7 +309,7 @@ public:
 		glDeleteTextures(3, textures);
 	}
 
-	void NextFrame() {
+	virtual void ConcurrentJob() override {
 
 		ogg_packet packet;
 		ogg_page   page;
@@ -313,62 +327,70 @@ public:
 				ret = th_decode_packetin(oggStream.mTheora.mCtx,
 											 &packet,
 											 &granulepos);
-				th_ycbcr_buffer buffer;
-				ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, buffer);
+
+				ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, this->codec_buffer);
 
 				if(ret == 0) {
-					UpdateTextures(buffer);
-					printf("Got a frame.\n");
+					std::unique_lock<std::mutex> lock( mutex );
+					this->frame_is_ready = true;
+					this->decode_in_progress = false;
+					return;
 				}
-				return;
+				assert(false);
 			}
 		}
 
 		while(this->read_ogg_packet(&packet, &page)) {
-//		if(read_ogg_packet(&packet, &page)) {
 
 			int serial = this->ogg_stream_serial;
 
 			OggStream & oggStream =
 				this->oggStreamMap[serial];
 
-			// if(correct stream !?
 			if(oggStream.mTheora.mCtx)
 			{
 				// Theora data-packet.
 				int ret = 0;
 
-//				ret = th_decode_headerin(
-//					&oggStream.mTheora.mInfo,
-//					&oggStream.mTheora.mComment,
-//					&oggStream.mTheora.mSetup,
-//					&packet);
-//
 				assert(ret==0);
 
 				ogg_int64_t granulepos = -1;
 				ret = th_decode_packetin(oggStream.mTheora.mCtx,
-				                             &packet,
-				                             &granulepos);
+											 &packet,
+											 &granulepos);
 
-//				assert(ret==0);
-
-				th_ycbcr_buffer buffer;
-				ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, buffer);
-
-//				assert(ret==0);
+				ret = th_decode_ycbcr_out(oggStream.mTheora.mCtx, this->codec_buffer);
 
 				if(ret == 0) {
-					UpdateTextures(buffer);
-					printf("Got a frame.\n");
+					std::unique_lock<std::mutex> lock( mutex );
+					this->decode_in_progress = false;
+					this->frame_is_ready = true;
+					return;
 				}
+				assert(false);
+			}
+		}
 
-				break;
-			}
-			else
-			{
-				printf("wrong stream?\n");
-			}
+		{
+			std::unique_lock<std::mutex> lock( mutex );
+			this->decode_in_progress = false;
+			return;
+		}
+	}
+
+	void NextFrame() {
+
+		std::unique_lock<std::mutex> lock( mutex );
+
+		if(frame_is_ready) {
+			UpdateTextures(this->codec_buffer);
+			frame_is_ready = false;
+		}
+
+		if(!decode_in_progress) {
+
+			decode_in_progress = true;
+			concurrentJobQueue->AddJob(sthis);
 		}
 	}
 
@@ -443,15 +465,18 @@ public:
 	}
 };
 
-MotionVideo::MotionVideo(UpdatedNode * parent, const std::string & s)
+MotionVideo::MotionVideo(UpdatedNode * parent, const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> cjq)
 	:	Updatable(parent)
 {
-	impl = new Impl(s);
+	std::shared_ptr<Impl> sthis =
+		std::shared_ptr<Impl>(impl = new Impl(s, cjq));
+
+	sthis->sthis = sthis; // FIXME: Ugly!
 }
 
 MotionVideo::~MotionVideo() {
 
-	delete impl;
+	impl->sthis.reset(); // FIXME: Ugly!
 }
 
 // IResource

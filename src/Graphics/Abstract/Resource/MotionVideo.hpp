@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include<Libs/Concurrency/IConcurrentJobQueue.hpp>
+
 namespace RH { namespace Graphics { namespace Abstract {
 
 class MotionVideo
@@ -9,7 +11,7 @@ class MotionVideo
 {
 public:
 
-	MotionVideo(UpdatedNode * parent, const std::string & s);
+	MotionVideo(UpdatedNode * parent, const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> cjq);
 	virtual ~MotionVideo();
 
 	// IResource
