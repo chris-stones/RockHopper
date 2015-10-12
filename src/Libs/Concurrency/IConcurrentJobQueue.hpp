@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IConcurrentJob.hpp"
+
 namespace RH { namespace Libs { namespace Concurrency {
 
 	class IConcurrentJobQueue {
