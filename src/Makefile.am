@@ -1,6 +1,8 @@
 
 bin_PROGRAMS = RockHopper
-RockHopper_SOURCES = Main.cpp
+RockHopper_SOURCES = \
+  Main.cpp \
+  Libs/IoCC/IoCC.cpp
 
 if platform_GNULinux
   RockHopper_SOURCES += Platforms/GNULinux/PlatformBootstrapper.cpp
