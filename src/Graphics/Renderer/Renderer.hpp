@@ -8,9 +8,11 @@ class Renderer
 {
 	typedef std::stack<float> 		AlphaStack;
 	typedef std::stack<glm::mat4> 	TranslateStack;
+	typedef std::stack<bool>        HiddenStack;
 
 	AlphaStack		alphaStack;
 	TranslateStack	translateStack;
+	HiddenStack     hiddenStack;
 
 	template<typename _T>
 	class Stack {
@@ -35,6 +37,7 @@ public:
 	{
 		alphaStack.push(1.0f);
 		translateStack.push(glm::mat4(1.0f));
+		hiddenStack.push(false);
 	}
 
 	void Render(Node * root, UI::Window * window)
@@ -48,6 +51,14 @@ public:
 
 		if(object->Get())
 			object->PropagateToChildren(this);
+	}
+
+	virtual void Visit(Abstract::Hidden * object) {
+
+		Stack<HiddenStack> stackOp(hiddenStack,
+			object->Get() );
+
+		object->PropagateToChildren(this);
 	}
 
 	virtual void Visit(Abstract::Update * object) {
@@ -95,7 +106,8 @@ public:
 	}
 	virtual void Visit(Abstract::Sprite * object) {
 
-		api->Render(object, translateStack.top(), alphaStack.top() );
+		if(!hiddenStack.top())
+			api->Render(object, translateStack.top(), alphaStack.top() );
 
 		object->PropagateToChildren(this);
 	}

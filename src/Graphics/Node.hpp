@@ -4,6 +4,7 @@
 #include "Abstract/Object.hpp"
 #include "Abstract/State/Alpha.hpp"
 #include "Abstract/State/Enabled.hpp"
+#include "Abstract/State/Hidden.hpp"
 #include "Abstract/State/Update.hpp"
 #include "Abstract/State/Rotate.hpp"
 #include "Abstract/State/Scale.hpp"
@@ -23,6 +24,7 @@ class Node
 protected:
 	Node * parent;
 
+/*
 	template<typename _T>
 	_T * GetFirstAncestorOfType() {
 
@@ -36,6 +38,7 @@ protected:
 		}
 		return nullptr;
 	}
+*/
 
 private:
 	std::list<Node*> children;
@@ -45,6 +48,7 @@ private:
 	std::unique_ptr<Abstract::Update>     sgUpdate;     // Optional - update updateable nodes.
 	std::unique_ptr<Abstract::Projection> sgProjection; // Optional - new projection matrix.
 	std::unique_ptr<Abstract::Enabled> 	  sgEnabled;	// Optional - enable / disable children.
+	std::unique_ptr<Abstract::Hidden>     sgHidden;     // Optional - hide / un-hide children. ( update but don't render )
 	std::unique_ptr<Abstract::Alpha>      sgAlpha;		// Optional - change alpha of children.
 	std::unique_ptr<Abstract::Scale>      sgScale;		// Optional - scale children.
 	std::unique_ptr<Abstract::Rotate>     sgRotate;		// Optional - rotate children.
@@ -203,10 +207,11 @@ private:
 	void UpdateSceneGraph() {
 
 		std::vector<Abstract::Object*> obj;
-		obj.reserve(9);
+		obj.reserve(10);
 		obj.push_back(sgHead.get());
 		if(sgEnabled) obj.push_back(sgEnabled.get());
 		if(sgUpdate) obj.push_back(sgUpdate.get());
+		if(sgHidden) obj.push_back(sgHidden.get());
 
 //	if(sgProjection) obj.push_back(sgProjection.get());
 
@@ -255,6 +260,17 @@ public:
 
 		if(sgEnabled) return sgEnabled->Get();
 		return true;
+	}
+
+	/////////////////////// HIDE / SHOW THIS NODE /////////////////////////
+	void SetHidden(bool enabled) {
+
+		Set(sgHidden,enabled);
+	}
+	bool IsHidden() const {
+
+		if(sgHidden) return sgHidden->Get();
+		return false;
 	}
 
 	////////////////////////// GET/SET ALPHA ////////////////////////////

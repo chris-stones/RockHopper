@@ -12,6 +12,7 @@
 
 #include "State/Alpha.hpp"
 #include "State/Enabled.hpp"
+#include "State/Hidden.hpp"
 #include "State/Rotate.hpp"
 #include "State/Scale.hpp"
 #include "State/Translate.hpp"

@@ -7,6 +7,7 @@ class OperationVisitor : public IVisitor {
 
 	virtual void Visit(Projection * enabled) {}
 	virtual void Visit(Enabled * enabled) {}
+	virtual void Visit(Hidden * hidden) {}
 	virtual void Visit(Alpha * alpha) {}
 	virtual void Visit(Scale * scale) {}
 	virtual void Visit(Rotate * rotate) {}

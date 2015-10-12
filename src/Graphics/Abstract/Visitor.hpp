@@ -7,6 +7,7 @@ namespace RH { namespace Graphics { namespace Abstract {
 
 class Projection;
 class Enabled;
+class Hidden;
 class Alpha;
 class Scale;
 class Rotate;
@@ -22,6 +23,7 @@ public:
 
 	virtual void Visit(Projection * enabled) = 0;
 	virtual void Visit(Enabled * enabled) = 0;
+	virtual void Visit(Hidden * hidden) = 0;
 	virtual void Visit(Alpha * alpha) = 0;
 	virtual void Visit(Scale * scale) = 0;
 	virtual void Visit(Rotate * rotate) = 0;
