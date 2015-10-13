@@ -7,18 +7,25 @@
 //#include <libimg.h>
 
 #include <Graphics/Graphics.hpp>
-
+#include <Libs/Concurrency/IConcurrentJob.hpp>
+#include <Libs/Concurrency/IConcurrentJobQueue.hpp>
 #include <stdexcept>
+#include <mutex>
 
 namespace RH { namespace Graphics { namespace Abstract {
 
-class MotionVideo::Impl {
+class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob  {
 
 	knib_handle knib;
+	std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue;
 
 	int channels;
 
 	GLuint textures[4];
+
+	std::mutex mutex;
+	bool decode_in_progress {false};
+	bool frame_is_ready {false};
 
 	static int CrCbAdjustResolution(int res,int channel) {
 
@@ -178,7 +185,11 @@ class MotionVideo::Impl {
 
 public:
 
-	Impl(const std::string & s) {
+	std::shared_ptr<Impl> sthis; // FIXME: ugly!
+
+	Impl(const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue)
+		:	concurrentJobQueue(concurrentJobQueue)
+	{
 
 		if( knib_open_file(s.c_str(), &knib) != 0)
 			throw std::runtime_error("knib_open_file failed.");
@@ -209,15 +220,37 @@ public:
 		knib_close(knib);
 	}
 
-	void NextFrame() {
+	virtual void ConcurrentJob() override {
 
 		knib_next_frame(knib);
-		if(channels >= 3) {
-			if(!(knib_current_frame(knib)%3))
-				UpdateTextures();
+
+		{
+			std::unique_lock<std::mutex> lock( mutex );
+			decode_in_progress = false;
+			frame_is_ready = true;
 		}
-		else
-			UpdateTextures();
+	}
+
+	void NextFrame() {
+
+		std::unique_lock<std::mutex> lock( mutex );
+
+		if(frame_is_ready) {
+
+			if(channels >= 3) {
+				if(!(knib_current_frame(knib)%3))
+					UpdateTextures();
+			}
+			else
+				UpdateTextures();
+
+			frame_is_ready = false;
+		}
+
+		if(!decode_in_progress) {
+			decode_in_progress = true;
+			concurrentJobQueue->AddJob(sthis);
+		}
 	}
 
 	GLuint GetRGBTexture() const {
@@ -300,15 +333,18 @@ public:
 	}
 };
 
-MotionVideo::MotionVideo(UpdatedNode * parent, const std::string & s)
+MotionVideo::MotionVideo(UpdatedNode * parent, const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> cjq)
 	:	Updatable(parent)
 {
-	impl = new Impl(s);
+	std::shared_ptr<Impl> sthis =
+		std::shared_ptr<Impl>( impl = new Impl(s,cjq) );
+
+	sthis->sthis = sthis; // FIXME: Ugly!
 }
 
 MotionVideo::~MotionVideo() {
 
-	delete impl;
+	impl->sthis.reset(); // FIXME: Ugly!
 }
 
 // IResource
