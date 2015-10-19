@@ -21,7 +21,6 @@ static int __report_gl_err(const char * file, const char * func, int line) {
 
 #include "Shaders/Shaders.hpp"
 #include "TexPak/TexPak.hpp"
-#include "UsesTextureFactory.hpp"
 #include "TextureFactory.hpp"
 #include "Sprite/Sprite.hpp"
 #include "Mesh/Mesh.hpp"

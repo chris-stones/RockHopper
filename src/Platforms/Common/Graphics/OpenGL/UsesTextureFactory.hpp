@@ -1,4 +1,4 @@
-
+/*
 #pragma once
 
 #include "TextureFactory.hpp"
@@ -25,4 +25,4 @@ public:
 		TF() = tf;
 	}
 };
-
+*/

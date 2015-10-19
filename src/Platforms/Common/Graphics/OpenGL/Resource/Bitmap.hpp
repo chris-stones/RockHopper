@@ -1,17 +1,17 @@
 #pragma once
 
 #include <Graphics/Graphics.hpp>
+#include <Libs/IoCC/IoCC.hpp>
 
 namespace RH { namespace Graphics { namespace Abstract {
 
-class Bitmap::Impl
-	: public UsesTextureFactory_
-{
+class Bitmap::Impl {
+
 	RH::Libs::TexPak::Texture * texture {};
 public:
-	Impl(const std::string & s) {
+	Impl(const char * resource, std::shared_ptr<TextureFactory> tf) {
 
-		texture = GetTextureFactory()->GetTexture( s.c_str() );
+		texture = tf->GetImpl()->GetTexture(resource);
 	}
 
 	virtual ~Impl() {
@@ -40,9 +40,9 @@ public:
 	}
 };
 
-Bitmap::Bitmap(const std::string & s) {
+Bitmap::Bitmap(const char * resource, std::shared_ptr<TextureFactory> tf) {
 
-	impl = new Impl(s);
+	impl = new Impl(resource, tf);
 }
 
 Bitmap::~Bitmap() {

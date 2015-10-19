@@ -8,7 +8,7 @@ class Bitmap
 {
 public:
 
-	Bitmap(const std::string & s);
+	Bitmap(const char * resource, std::shared_ptr<TextureFactory> tf);
 	virtual ~Bitmap();
 
 	// IResource

@@ -86,33 +86,19 @@ public:
 		:	RH::Graphics::UpdatedNode(NULL)
 	{
 		bitmap =
-			  std::make_shared<RH::Graphics::Abstract::Bitmap>("base.png");
-
-//		motionVideo =
-//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.kib");
+			this->container.New<RH::Graphics::Abstract::Bitmap>("base.png");
 
 		const char * str = "mv.ogg";
 		motionVideo =
 			IoCCBase::container.New<RH::Graphics::Abstract::MotionVideo>(
 				static_cast<RH::Graphics::UpdatedNode*>(this), str);
 
-//		motionVideo =
-//			std::make_shared<RH::Graphics::Abstract::MotionVideo>(this, "mv.ogg");
-
-		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo );
-//		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, /*motionVideo*/ bitmap );
-//		sprite1 = MakeExported<RH::Graphics::SpriteNode>( "sprite1", this, /*motionVideo*/ bitmap );
+//		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo );
+		sprite0 = this->container.New
+			<RH::Graphics::SpriteNode, RH::Graphics::Node*, std::shared_ptr<RH::Graphics::Abstract::IResource>>
+				(this, motionVideo);
 
 		SetProjection( glm::ortho(0.0f, 1920.0f * 1.0f, 1080.0f * 1.0f, 0.0f) );
-//		sprite1->SetTranslation(glm::vec3(1920.0f, 1080.0f, 0.0f));
-
-		/*
-		pulseEffect = std::make_shared<PulseEffect>(this, sprite0, sprite1);
-
-		pulseSubscription =
-			pulseEffect->Subscribe<PulseEffect::PulseFinishedEvent>(
-				[=](const PulseEffect::PulseFinishedEvent &ev){this->OnFinishedPulsing(ev);});
-		*/
 
 	}
 
@@ -173,7 +159,7 @@ public:
 
 class IOCCSetup : public RH::Libs::IoCCBase {
 
-	void CreateVideoDecodeJobQueue(int threads) {
+	void CreateMotionVideoInstantiator(int threads) {
 
 		// Create a job queue for motion videos.
 		std::shared_ptr<RH::Libs::Concurrency::ConcurrentJobQueue> concurrentJobQueue =
@@ -199,11 +185,39 @@ class IOCCSetup : public RH::Libs::IoCCBase {
 			);
 	}
 
+	void CreateBitmapInstantiator() {
+
+		this->container.RegisterInstantiator
+			<std::shared_ptr<RH::Graphics::Abstract::Bitmap>(const char *)>(
+
+				[&](const char * resource)
+				{
+					return std::make_shared<RH::Graphics::Abstract::Bitmap>(
+						resource,
+						this->container.Retrieve<RH::Graphics::TextureFactory>());
+				}
+			);
+	}
+
+	void CreateSpriteInstantiator() {
+
+		this->container.RegisterInstantiator
+			<std::shared_ptr<RH::Graphics::SpriteNode>(RH::Graphics::Node*, std::shared_ptr<RH::Graphics::Abstract::IResource>)>(
+
+				[&](RH::Graphics::Node *node, std::shared_ptr<RH::Graphics::Abstract::IResource> resource)
+				{
+					return std::make_shared<RH::Graphics::SpriteNode>(node, resource);
+				}
+			);
+	}
+
 public:
 
 	void Setup() {
 
-		CreateVideoDecodeJobQueue(1);
+		CreateMotionVideoInstantiator(1);
+		CreateBitmapInstantiator();
+		CreateSpriteInstantiator();
 	}
 };
 

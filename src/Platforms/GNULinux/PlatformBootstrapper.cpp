@@ -34,25 +34,27 @@
 #include "UserInterface/UserInterface.hpp"
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
+#include <Libs/IoCC/IoCC.hpp>
 
 // Initialise window input's event publisher interface.
 RH::Libs::EventDispatcher::DirectDispatcher RH::UI::InputSubscriberBase::inputSubscriber;
 
 namespace RH { namespace Platform {
 
-class PlatformBootstrapper::Impl {
+class PlatformBootstrapper::Impl : public RH::Libs::IoCCBase {
 
-	void DistributeTextureFactory() {
+	void CreateTextureFactory() {
 
-		TextureFactory_ * tf = new TextureFactory_();
+		std::shared_ptr<::RH::Graphics::TextureFactory> tf =
+			std::make_shared<::RH::Graphics::TextureFactory>();
 
-		UsesTextureFactory_::SetTextureFactory( tf );
+		this->container.Store(tf);
 	}
 
 public:
 	Impl() {
 
-		DistributeTextureFactory();
+		CreateTextureFactory();
 	}
 };
 

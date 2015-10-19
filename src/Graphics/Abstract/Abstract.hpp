@@ -5,6 +5,7 @@
 #include "OperationVisitor.hpp"
 #include "Object.hpp"
 
+#include "TextureFactory/TextureFactory.hpp"
 #include "Resource/Resource.hpp"
 
 #include "Operation/Sprite.hpp"

@@ -1,9 +1,11 @@
 
 #pragma once
 
-#include <memory>
+#include<Graphics/Abstract/TextureFactory/TextureFactory.hpp>
 
-class TextureFactory_ {
+namespace RH { namespace Graphics {
+
+class TextureFactory::Impl {
 
 	typedef std::unique_ptr<RH::Libs::TexPak::TexturePackage> UniqueTexPak;
 
@@ -11,7 +13,7 @@ class TextureFactory_ {
 
 public:
 
-	TextureFactory_() {
+	Impl() {
 
 		int flags = RH::Libs::TexPak::TexturePackage::FILESYSTEM;
 
@@ -19,7 +21,7 @@ public:
 			new RH::Libs::TexPak::TexturePackage("default.texpak", flags));
 	}
 
-	~TextureFactory_() {
+	virtual ~Impl() {
 
 	}
 
@@ -29,3 +31,15 @@ public:
 	}
 };
 
+TextureFactory::TextureFactory() {
+
+	impl = new Impl();
+}
+
+TextureFactory::~TextureFactory() {
+
+	delete impl;
+}
+
+
+}}
