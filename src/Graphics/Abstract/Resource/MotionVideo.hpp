@@ -15,12 +15,12 @@ public:
 	virtual ~MotionVideo();
 
 	// IResource
-	float GetWidth() const;
-	float GetHeight() const;
-	void ReadCoords(int dim, int stride, float * coords) const;
+	float GetWidth() const override;
+	float GetHeight() const override;
+	void ReadCoords(int dim, int stride, float * coords) const override;
 
 	// IUpdatable
-	void Update() { NextFrame(); }
+	void Update() override { NextFrame(); }
 
 	virtual void AcceptVisitor(IVisitor * visitor) {
 		visitor->Visit(this);

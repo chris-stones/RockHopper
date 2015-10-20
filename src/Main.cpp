@@ -93,7 +93,6 @@ public:
 			IoCCBase::container.New<RH::Graphics::Abstract::MotionVideo>(
 				static_cast<RH::Graphics::UpdatedNode*>(this), str);
 
-//		sprite0 = MakeExported<RH::Graphics::SpriteNode>( "sprite0", this, motionVideo );
 		sprite0 = this->container.New
 			<RH::Graphics::SpriteNode, RH::Graphics::Node*, std::shared_ptr<RH::Graphics::Abstract::IResource>>
 				(this, motionVideo);

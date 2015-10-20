@@ -15,6 +15,7 @@ namespace RH { namespace Graphics { namespace Abstract {
 
 class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob {
 
+	std::string file_name;
 	FILE * file {nullptr};
 	ogg_sync_state ogg_state;
 	int ogg_stream_serial {0};
@@ -115,9 +116,6 @@ class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob {
 
 				printf("ERR creating texture %dx%d\n",channel_w, channel_h);
 			}
-			else {
-				printf("Created texture %d: %dx%d\n", channel,channel_w, channel_h);
-			}
 		}
 
 		return 0;
@@ -200,7 +198,6 @@ class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob {
 			ret = ogg_stream_packetout(&oggStream.mState, packet);
 			if (ret == 0) {
 				// Need more data to be able to complete the packet
-				printf("read_ogg_packet Need more data.\n");
 				continue;
 			}
 			else if (ret == -1) {
@@ -209,8 +206,6 @@ class MotionVideo::Impl : public RH::Libs::Concurrency::IConcurrentJob {
 				printf("ogg_stream_packetout err.\n");
 				return false;
 			}
-
-			printf("Got a packet\n");
 			return true;
 		}
 		return false;
@@ -220,11 +215,12 @@ public:
 
 	std::shared_ptr<Impl> sthis; // FIXME: ugly!
 
-	Impl(const std::string & s, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue)
-		:	concurrentJobQueue(concurrentJobQueue)
+	Impl(const std::string & file_name, std::shared_ptr<RH::Libs::Concurrency::IConcurrentJobQueue> concurrentJobQueue)
+		:	file_name(file_name),
+			concurrentJobQueue(concurrentJobQueue)
 	{
 
-		if((this->file = fopen(s.c_str(), "rb"))==nullptr)
+		if((this->file = fopen(file_name.c_str(), "rb"))==nullptr)
 			throw std::runtime_error("fopen error.");
 
 		memset(textures, 0, sizeof textures);
