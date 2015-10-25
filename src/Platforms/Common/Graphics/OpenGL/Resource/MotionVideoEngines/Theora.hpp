@@ -77,8 +77,6 @@ class MotionVideo::Impl {
 
 			while(ogg_sync_pageout(state, p_ogg_page) != 1) {
 
-			  int size = 256;
-
 			  char* buffer = ogg_sync_buffer(state, 4096);
 
 			  size_t bytes = fread(buffer, 1, 4096, this->file);
@@ -321,6 +319,7 @@ class MotionVideo::Impl {
 	int w{0};
 	int h{0};
 	bool finished{false};
+	bool play{false};
 
 	static int CrCbAdjustResolution(int res,int channel) {
 
@@ -429,16 +428,25 @@ public:
 		glDeleteTextures(3, textures);
 	}
 
+	bool IsFinished() const { return this->finished; }
+
 
 	void Reset() {
 
 		decodeContext.reset();
 		finished = false;
+		play = false;
+	}
+
+	void Play() {
+
+		Reset();
+		this->play = true;
 	}
 
 	void NextFrame() {
 
-		if(!finished) {
+		if(this->play && !finished) {
 			if(!decodeContext) {
 
 				decodeContext = std::unique_ptr<DecodeContext>(
@@ -447,12 +455,10 @@ public:
 				decodeContext->wthis = decodeContext;
 			}
 
-
 			if(!decodeContext->NextFrame()) {
 				decodeContext.reset();
 				finished = true;
-
-				Reset(); // DELETE ME - DONT LOOP BY DEFAULT.
+				play = false;
 			}
 		}
 	}
@@ -560,6 +566,21 @@ void MotionVideo::ReadCoords(int dim, int stride, float * coords) const {
 void MotionVideo::NextFrame() {
 
 	impl->NextFrame();
+}
+
+void MotionVideo::Reset() {
+
+	impl->Reset();
+}
+
+void MotionVideo::Play() {
+
+	impl->Play();
+}
+
+bool MotionVideo::IsFinished() const {
+
+	return impl->IsFinished();
 }
 
 }}}

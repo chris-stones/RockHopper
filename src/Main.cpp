@@ -13,14 +13,92 @@
 
 
 class VisualEffect
-	:	public RH::Graphics::Updatable,
-		public RH::Libs::EventDispatcher::DirectDispatcher
+	:	public RH::Graphics::Updatable
 {
+	typedef RH::Libs::EventDispatcher::DirectDispatcher DirectDispatcher;
+	typedef RH::Libs::EventDispatcher::ISubscription ISubscription;
+
+	std::shared_ptr<DirectDispatcher> directDispatcher;
+
 public:
 
 	VisualEffect(RH::Graphics::UpdatedNode * parent)
 		:	RH::Graphics::Updatable(parent)
-	{}
+	{
+		directDispatcher = std::make_shared<DirectDispatcher>();
+	}
+
+	virtual ~VisualEffect() {
+	}
+
+	template<typename _EventType>
+	std::unique_ptr<ISubscription> Subscribe(std::function<void(const _EventType &)> callback, std::function<bool(const _EventType &)> test) {
+
+		return directDispatcher->Subscribe(callback, test);
+	}
+
+	template<typename _EventType>
+	std::unique_ptr<ISubscription> Subscribe(std::function<void(const _EventType &)> callback) {
+
+		return directDispatcher->Subscribe(callback);
+	}
+
+	template<typename _EventType>
+	std::unique_ptr<ISubscription> Subscribe(std::function<void(const _EventType &)> callback, const _EventType &compareEvent) {
+
+		return directDispatcher->Subscribe(callback, compareEvent);
+	}
+
+	template<typename _EventType>
+	void Raise(const _EventType &event) {
+
+		// NOTE: Event handler COULD try to delete the event dispatcher while
+		//	other events are waiting to be processed.
+		//  create a new shared_ptr on the stack.
+		std::shared_ptr<DirectDispatcher> lockedInDirectDispatcher =
+			this->directDispatcher;
+
+		lockedInDirectDispatcher->Raise(event);
+	}
+};
+
+class PlayMotionVideoEffect : public VisualEffect {
+
+	typedef ::RH::Graphics::Abstract::MotionVideo MotionVideo;
+
+	std::shared_ptr<MotionVideo> mv;
+	bool finished{false};
+
+public:
+
+	struct FinishedEvent {
+		std::shared_ptr<MotionVideo> mv;
+		FinishedEvent(std::shared_ptr<MotionVideo> mv) : mv(mv) {}
+	};
+
+	PlayMotionVideoEffect(RH::Graphics::UpdatedNode * parent, std::shared_ptr<MotionVideo> mv)
+		:	VisualEffect(parent),
+			mv(mv)
+	{
+		mv->Play();
+	}
+
+	virtual ~PlayMotionVideoEffect() {
+
+		printf("~PlayMotionVideoEffect() 0\n");
+		mv->Reset();
+		printf("~PlayMotionVideoEffect() 1\n");
+	}
+
+	virtual void Update() override {
+
+		if(!finished && mv->IsFinished()) {
+			finished = true;
+			printf("BEGIN: %p->Raise(%p)\n", this, mv.get());
+			this->Raise(FinishedEvent(mv));
+			printf("END:   %p->Raise(%p)\n", this, mv.get());
+		}
+	}
 };
 
 class PulseEffect
@@ -78,8 +156,12 @@ class MyScene
 	std::shared_ptr<RH::Graphics::Abstract::Bitmap> bitmap;
 	std::shared_ptr<RH::Graphics::Abstract::MotionVideo> motionVideo;
 
-	std::shared_ptr<PulseEffect> pulseEffect;
-	std::unique_ptr<RH::Libs::EventDispatcher::ISubscription> pulseSubscription;
+//	std::shared_ptr<PulseEffect> pulseEffect;
+//	std::unique_ptr<RH::Libs::EventDispatcher::ISubscription> pulseSubscription;
+
+	std::unique_ptr<RH::Libs::EventDispatcher::ISubscription> playMotionVideoSubscription;
+	std::shared_ptr<PlayMotionVideoEffect> playMotionVideoEffect;
+
 
 public:
 	MyScene()
@@ -101,9 +183,27 @@ public:
 
 	}
 
-	void OnFinishedPulsing(const PulseEffect::PulseFinishedEvent &event) {
+	virtual ~MyScene() {
 
-		printf("finishedPulsing\n");
+		printf("~MyScene()\n");
+	}
+
+	void PlayVideo() {
+
+		printf("PLAY VIDEO\n");
+
+		playMotionVideoEffect = std::shared_ptr<PlayMotionVideoEffect>(
+			new PlayMotionVideoEffect(this, motionVideo));
+
+		playMotionVideoSubscription = playMotionVideoEffect->Subscribe<PlayMotionVideoEffect::FinishedEvent>(
+			[&](const PlayMotionVideoEffect::FinishedEvent &ev) { this->OnVideoFinishedPlaying(); } );
+	}
+
+	void OnVideoFinishedPlaying() {
+
+		printf("video finished\n");
+
+		PlayVideo();
 	}
 };
 
@@ -146,6 +246,8 @@ public:
 			[=](const KeyPressedEvent &ev) {this->OnKeyPressed(ev); });
 
 //		myScene.SetEnabled(false);
+
+		myScene.PlayVideo();
 
 		while(!exitFlag) {
 

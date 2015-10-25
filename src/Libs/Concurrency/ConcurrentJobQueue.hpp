@@ -60,7 +60,7 @@ namespace RH { namespace Libs { namespace Concurrency {
 				shutdown_flag = true;
 				readable.notify_all();
 			}
-			for(int i=0;i<threadVector.size(); i++)
+			for(unsigned int i=0;i<threadVector.size(); i++)
 				threadVector[i].join();
 		}
 

@@ -22,6 +22,10 @@ public:
 	// IUpdatable
 	void Update() override { NextFrame(); }
 
+	void Play();
+	void Reset();
+	bool IsFinished() const;
+
 	virtual void AcceptVisitor(IVisitor * visitor) {
 		visitor->Visit(this);
 	}
