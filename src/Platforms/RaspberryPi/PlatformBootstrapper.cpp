@@ -13,6 +13,8 @@
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
 
+#include <Libs/EventDispatcher/EventDispatcher.hpp>
+
 // Initialise window input's event publisher interface.
 RH::Libs::EventDispatcher::DirectDispatcher RH::UI::InputSubscriberBase::inputSubscriber;
 
