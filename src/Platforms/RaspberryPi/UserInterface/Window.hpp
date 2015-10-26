@@ -15,10 +15,13 @@
 	#include <GLES2/gl2ext.h>
 #endif
 
+#ifdef HAVE_BCM_HOST_H
 #include <bcm_host.h>
+#endif
+
 #include <memory>
 
-#include "API/EGLDisplay.hpp" // Very RaspberryPi specialised EGLDisplay.
+#include <Platforms/RaspberryPi/UserInterface/API/EGL_Pi_Display.hpp> // Very RaspberryPi specialised EGLDisplay.
 #include <Platforms/Common/Graphics/EGL/EGLScreen.hpp>
 #include <Platforms/Common/Graphics/EGL/EGLWindow.hpp>
 #include <Platforms/Common/Graphics/EGL/EGLContext.hpp>
@@ -41,21 +44,21 @@ static const WindowHints & _getDefaultWindowHints() {
 	return defaultWindowHints;
 }
 
-// Window implementation for GNU/Linux GLX
+// Window implementation for RaspberryPi
 class Window::Impl {
 
-	std::unique_ptr<Display_> display;
-	std::unique_ptr<Screen_>  screen;
-	std::unique_ptr<Window_>  window;
-	std::unique_ptr<EGL_> context;
+	std::unique_ptr<EGL_Pi_Display_> display;
+	std::unique_ptr<EGLScreen_>      screen;
+	std::unique_ptr<EGLWindow_>      window;
+	std::unique_ptr<EGL_>            context;
 
 public:
 	Impl(const WindowHints & wh) {
 
-		display = std::unique_ptr<Display_> ( new Display_() );
-		screen  = std::unique_ptr<Screen_ > ( new Screen_ (display->Get())  );
-		window  = std::unique_ptr<Window_ > ( new Window_ (display->Get(), screen->GetConfig(), display->GetNativeWindow()) );
-		context = std::unique_ptr<EGL_> ( new EGL_(display->Get(), screen->GetConfig()) );
+		display = std::unique_ptr<EGL_Pi_Display_> ( new EGL_Pi_Display_() );
+		screen  = std::unique_ptr<EGLScreen_>      ( new EGLScreen_     (display->Get())  );
+		window  = std::unique_ptr<EGLWindow_>      ( new EGLWindow_     (display->Get(), screen->GetConfig(), display->GetNativeWindow()) );
+		context = std::unique_ptr<EGL_>            ( new EGL_           (display->Get(), screen->GetConfig()) );
 
 		MakeContextCurrent();
 

@@ -53,7 +53,21 @@ AC_ARG_WITH(
     	[bcm_host_init],[bcm_host],[],
     	AC_MSG_ERROR([Unable to find bcm_host library.])
     )      
-    
+    AC_CHECK_HEADERS([bcm_host.h],[],[AC_MSG_ERROR([Missing bcm_host.h])])
+  ]
+ )
+
+#FAKE RASPBERY PI -  skip the bcm_host headers and libraries, use X11 instead!
+AC_ARG_WITH(
+  [fake-raspberrypi],
+  AS_HELP_STRING([--with-fake-raspberrypi], [Target Debug the PI on non-pi devices. Selects --with-gles]),
+  [
+    platform="RaspberryPi"
+    with_egl="yes"
+    with_gles="yes"
+    with_gl="no"
+    with_glx="no"
+    with_x11="yes"
   ]
  )
 

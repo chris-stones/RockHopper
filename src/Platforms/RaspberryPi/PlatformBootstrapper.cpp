@@ -3,46 +3,35 @@
 #include <config.h>
 #endif
 
+#include "PlatformHeaders.hpp"
+
 #include <Platforms/PlatformBootstrapper.hpp>
 #include <UserInterface/UserInterface.hpp>
 #include <Graphics/Graphics.hpp>
 
-#include "UserInterface/UserInterface.hpp"
+#include <Platforms/RaspberryPi/UserInterface/UserInterface.hpp>
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
 
-// Instance of event dispatcher for UI input events.
-static RH::Libs::EventDispatcher::Manager inputEventDispatcherManager;
-
 // Initialise window input's event publisher interface.
-//RH::Libs::EventDispatcher::EventPublicationManager Input_::eventPublicationManager = inputEventDispatcherManager.PublicationInterface();
-
-// Initialise UI's event subscriber / scheduler interface.
-RH::Libs::EventDispatcher::EventSubscriptionManager RH::UI::InputSubscriberBase::inputSubscriber = inputEventDispatcherManager.SubscriptionInterface();
-RH::Libs::EventDispatcher::EventScheduleManager RH::UI::InputSubscriberBase::inputScheduler = inputEventDispatcherManager.SchedulerInterface();
+RH::Libs::EventDispatcher::DirectDispatcher RH::UI::InputSubscriberBase::inputSubscriber;
 
 namespace RH { namespace Platform {
 
-class PlatformBootstrapper::Impl {
+class PlatformBootstrapper::Impl : public RH::Libs::IoCCBase {
 
-	void DistributeTextureFactory() {
+	void CreateTextureFactory() {
 
-		TextureFactory_ * tf = new TextureFactory_();
+		std::shared_ptr<::RH::Graphics::TextureFactory> tf =
+			std::make_shared<::RH::Graphics::TextureFactory>();
 
-		UsesTextureFactory_::SetTextureFactory( tf );
-	}
-
-	void DistribureWindowSize() {
-
-		// TODO:
-		UsesWindowSize_::SetWindowSize(800.0f, 600.0f);
+		this->container.Store(tf);
 	}
 
 public:
 	Impl() {
 
-		DistribureWindowSize();
-		DistributeTextureFactory();
+		CreateTextureFactory();
 	}
 };
 

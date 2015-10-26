@@ -1,24 +1,27 @@
 #pragma once
 
-class Display_ {
+class EGL_Pi_Display_ {
 
 	EGLDisplay dpy;
 	EGLint version_major;
 	EGLint version_minor;
 	EGLNativeWindowType nativewindow;
+#ifdef HAVE_BCM_HOST_H
 	EGL_DISPMANX_WINDOW_T nativewindow_obj;
 	DISPMANX_ELEMENT_HANDLE_T dispman_element;
 	DISPMANX_DISPLAY_HANDLE_T dispman_display;
 	DISPMANX_UPDATE_HANDLE_T dispman_update;
 	VC_RECT_T dst_rect;
 	VC_RECT_T src_rect;
+#endif /* HAVE_BCM_HOST_H */
 	uint32_t display_width;
 	uint32_t display_height;
 
 public:
 
-	Display_() {
+	EGL_Pi_Display_() {
 
+#ifdef HAVE_BCM_HOST_H
 		bcm_host_init();
 
 		if( graphics_get_display_size(0 /* LCD */, &display_width, &display_height) < 0 ) {
@@ -69,11 +72,14 @@ public:
 		  bcm_host_deinit();
 		  throw std::runtime_error("eglInitialize");
 		}
+#endif
 	}
 
-	~Display_() {
+	~EGL_Pi_Display_() {
+#ifdef HAVE_BCM_HOST_H
 		eglTerminate(dpy);
 		bcm_host_deinit();
+#endif
 	}
 
 	EGLDisplay Get() const {
