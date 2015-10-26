@@ -5,11 +5,13 @@
 
 #include "PlatformHeaders.hpp"
 
+#include <Platforms/RaspberryPi/UserInterface/UserInterface.hpp>
+
 #include <Platforms/PlatformBootstrapper.hpp>
 #include <UserInterface/UserInterface.hpp>
 #include <Graphics/Graphics.hpp>
 
-#include <Platforms/RaspberryPi/UserInterface/UserInterface.hpp>
+//#include <Platforms/RaspberryPi/UserInterface/UserInterface.hpp>
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
 
