@@ -3,22 +3,6 @@
 
 #include <UserInterface/Window.hpp>
 
-#ifdef HAVE_EGL_EGL_H
-	#include <EGL/egl.h>
-#endif
-
-#ifdef HAVE_GLES2_GL2_H
-	#include <GLES2/gl2.h>
-#endif
-
-#ifdef HAVE_GLES2_GL2EXT_H
-	#include <GLES2/gl2ext.h>
-#endif
-
-#ifdef HAVE_BCM_HOST_H
-#include <bcm_host.h>
-#endif
-
 #include <memory>
 
 #include <Platforms/RaspberryPi/UserInterface/API/EGL_Pi_Display.hpp> // Very RaspberryPi specialised EGLDisplay.

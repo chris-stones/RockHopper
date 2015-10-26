@@ -1,6 +1,11 @@
 
 #pragma once
 
+#ifdef HAVE_BCM_HOST_H
+#include <bcm_host.h>
+#undef countof // FFS Broadcom!
+#endif
+
 #ifdef HAVE_X11_XLIB_H
 	#include <X11/Xlib.h>
 	#include <X11/extensions/Xrandr.h>

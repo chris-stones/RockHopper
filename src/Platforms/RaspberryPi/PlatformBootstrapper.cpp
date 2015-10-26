@@ -13,6 +13,7 @@
 #include <Platforms/Common/Graphics/OpenGL/Graphics.hpp>
 #include <Platforms/Common/Graphics/OpenGL/GraphicsAPI.hpp>
 
+#include <UserInterface/Input.hpp>
 #include <Libs/EventDispatcher/EventDispatcher.hpp>
 
 // Initialise window input's event publisher interface.
