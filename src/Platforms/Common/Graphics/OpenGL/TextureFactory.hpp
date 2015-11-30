@@ -17,8 +17,12 @@ public:
 
 		int flags = RH::Libs::TexPak::TexturePackage::FILESYSTEM;
 
+		const char * texpak_file = getenv("TEXPAK");
+		if(!texpak_file)
+			texpak_file = "default.texpak";
+
 		defautTexturePackage = UniqueTexPak(
-			new RH::Libs::TexPak::TexturePackage("default.texpak", flags));
+			new RH::Libs::TexPak::TexturePackage(texpak_file, flags));
 	}
 
 	virtual ~Impl() {

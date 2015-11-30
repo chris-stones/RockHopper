@@ -40,7 +40,7 @@ public:
 		GL_ERROR();
 		windowImpl->MakeContextCurrent();
 		GL_ERROR();
-		glClearColor(1.0f,0.0f,1.0f,1.0f);
+		glClearColor(0.0f,0.0f,0.0f,1.0f);
 		GL_ERROR();
 		glClear( GL_COLOR_BUFFER_BIT );
 		GL_ERROR();
@@ -111,6 +111,7 @@ public:
 		GL_ERROR();
 	}
 
+#if(HAVE_MOTIONVIDEO_PROVIDER)
 	void RenderPlanarKnib(Abstract::MotionVideo::Impl * motionVideoImpl) {
 
 		KnibShader_ * shader;
@@ -160,9 +161,11 @@ public:
 		glBindTexture(GL_TEXTURE_2D, motionVideoImpl->GetATexture());
 		GL_ERROR();
 	}
+#endif
 
 	virtual void Visit( Abstract::MotionVideo * motionVideo ) {
 
+#if(HAVE_MOTIONVIDEO_PROVIDER)
 		Abstract::MotionVideo::Impl * motionVideoImpl =
 			motionVideo->GetImpl();
 
@@ -173,6 +176,7 @@ public:
 		}
 		else
 			RenderRGBaTexture( motionVideoImpl->GetRGBTexture() );
+#endif
 	}
 
 	virtual void Visit( Abstract::Sprite * sprite ) {

@@ -2,9 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(RockHopper, 0.1, chris.stones@zoho.com)
+AC_INIT(update_popup, 0.1, chris.stones@zoho.com)
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_SRCDIR(src/Main.cpp)
+AC_CONFIG_SRCDIR(src/Popup.cpp)
 AC_CONFIG_HEADERS(src/config.h)
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -33,6 +33,20 @@ AC_ARG_WITH([x11],    AS_HELP_STRING([--with-x11],    [Use X11.]))
 AC_ARG_WITH([SDL2],   AS_HELP_STRING([--with-SDL2],   [Use SDL2.]))
 AC_ARG_WITH([knib],   AS_HELP_STRING([--with-knib],   [Use Knib videos.]))
 AC_ARG_WITH([theora], AS_HELP_STRING([--with-theora], [Use Theora videos.]))
+
+#Mali400
+AC_ARG_WITH(
+  [mali400],
+  AS_HELP_STRING([--with-mali400], [Target Mali400. Selects --with-gles]),
+  [
+    platform="Mali400"
+    with_egl="yes"
+    with_gles="yes"
+    with_gl="no"
+    with_glx="no"
+    with_x11="no"
+  ]
+)
 
 #RASPBERY PI - Try to help the user as much as possible! 
 AC_ARG_WITH(
@@ -160,6 +174,7 @@ AC_CHECK_HEADERS(
 
 AS_IF([test "x$with_knib" = "xyes"],
 [
+	with_motionvideo_provider="yes"
 	AC_DEFINE([HAVE_KNIB_VIDEO],[1],[use libknib_read for motion video support.])
 	AC_SEARCH_LIBS([knib_open_file],[knib_read],[],AC_MSG_ERROR([Unable to find knib_reader library]))
 	AC_CHECK_HEADERS(
@@ -174,6 +189,8 @@ AS_IF([test "x$with_knib" = "xyes"],
 
 AS_IF([test "x$with_theora" = "xyes"],
 [
+	with_motionvideo_provider="yes"
+
 	AC_CHECK_HEADERS([ogg/ogg.h],[],[AC_MSG_ERROR([Missing ogg/ogg.h])])
 	AC_CHECK_HEADERS([theora/theoradec.h],[],[AC_MSG_ERROR([Missing theora/theoradec.h])])
 	
@@ -181,6 +198,11 @@ AS_IF([test "x$with_theora" = "xyes"],
 	AC_SEARCH_LIBS([th_decode_headerin],[theoradec],[],AC_MSG_ERROR([Unable to find libogg library]))
 	
 	AC_DEFINE([HAVE_THEORA_VIDEO],[1],[use libtheora and libogg for motion video support.])
+])
+
+AS_IF([test "x$with_motionvideo_provider" = "xyes"],
+[
+	AC_DEFINE([HAVE_MOTIONVIDEO_PROVIDER],[1],[MotionVideo is supported])
 ])
 
 AX_PTHREAD(
@@ -204,6 +226,7 @@ AX_PTHREAD(
 
 AM_CONDITIONAL([platform_GNULinux], [test "$platform" = "GNULinux"])
 AM_CONDITIONAL([platform_RaspberryPi], [test "$platform" = "RaspberryPi"])
+AM_CONDITIONAL([platform_Mali400], [test "$platform" = "Mali400"])
 AM_CONDITIONAL([platform_Win32], [test "$platform" = "Win32"])
 
 AC_PROG_CXX
