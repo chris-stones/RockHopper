@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{7916255d-2739-41e0-ac74-479c9308c76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Abstract">
+      <UniqueIdentifier>{f02d4aaa-8f9b-4027-bc6f-a458a4df6cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Renderer">
+      <UniqueIdentifier>{875b7873-85f6-4dbc-abd3-7b35c484596d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Abstract\Operation">
+      <UniqueIdentifier>{b95230e1-6655-4e9e-a106-0013b4bd9a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Abstract\Resource">
+      <UniqueIdentifier>{e402ccbe-dc54-486b-ad86-b7f8842b50e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Abstract\State">
+      <UniqueIdentifier>{f4711d5d-303c-4a33-bafb-e6ffa19cf0bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{4d8f1491-6756-4b03-9158-58701f7f977c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface">
+      <UniqueIdentifier>{35bd7c14-2c2e-4f4a-95bc-984886fa6ded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface\Events">
+      <UniqueIdentifier>{68867cda-e403-4ecb-ba09-f4dc3a18337c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs">
+      <UniqueIdentifier>{0f7362a0-88dc-49d3-ab9a-40ffcd5909e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms">
+      <UniqueIdentifier>{45edc65c-da6c-40c5-a098-dd42b99d4c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common">
+      <UniqueIdentifier>{cd7aa708-83fa-4ac6-a2c0-f806697d0a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\GNULinux">
+      <UniqueIdentifier>{783c999f-2019-4b66-b492-0d40501b9c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\RaspberryPi">
+      <UniqueIdentifier>{82ace37e-d06e-49ec-b23b-fde987faa6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Win32">
+      <UniqueIdentifier>{45b51067-c9df-4436-9aef-00268b0205a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics">
+      <UniqueIdentifier>{87a4d6e2-f48d-4cdb-919d-1caa446032ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\EGL">
+      <UniqueIdentifier>{947ff905-1dc7-4c25-b049-456500368151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL">
+      <UniqueIdentifier>{56d7b6fd-b09b-457f-a74d-1f0121f6f059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Mesh">
+      <UniqueIdentifier>{59f6e243-8c76-45c8-ace0-95c0c0b877ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Resource">
+      <UniqueIdentifier>{0cf8b3ee-bab7-4b51-8258-bc950d340af2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Shaders">
+      <UniqueIdentifier>{c1a52f01-cbae-46b2-bd39-15bd185ccd18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Sprite">
+      <UniqueIdentifier>{0c74f8e5-faca-44d0-8f42-aae26a80080a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\TexPak">
+      <UniqueIdentifier>{9779713d-0a4d-4e44-86c6-d25e619eafac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Shaders\Source">
+      <UniqueIdentifier>{bde5b03e-6b3e-4cc3-a394-3d7eb5fd055c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\RaspberryPi\UserInterface">
+      <UniqueIdentifier>{269cbfa7-c0a2-4a9c-8a24-e2fffcfb9eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\RaspberryPi\UserInterface\API">
+      <UniqueIdentifier>{879d7262-b398-4c99-a7f9-f5910a8a1ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\GNULinux\Media">
+      <UniqueIdentifier>{40885907-3be2-4c14-9aaf-6ac6d48ef41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\GNULinux\UserInterface">
+      <UniqueIdentifier>{7e09e0be-6488-4bba-a37f-282769eb8815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\GNULinux\UserInterface\API">
+      <UniqueIdentifier>{d4d79e36-29fa-44d3-8e2a-f4a97c519a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\GNULinux\UserInterface\API\GLX">
+      <UniqueIdentifier>{9f82dea6-b047-4e9a-9f98-aeb161b7e374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\UserInterface">
+      <UniqueIdentifier>{9492bb26-de6b-425e-bcb1-5841ab7bc559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\UserInterface\SDL">
+      <UniqueIdentifier>{baf26661-f4ad-44e9-8e53-528c0a1a1de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Win32\UserInterface">
+      <UniqueIdentifier>{158da9b5-eb38-4445-a170-d6575553ca62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Win32\UserInterface\API">
+      <UniqueIdentifier>{b5a7c5aa-890f-4878-90af-835d0e221e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Win32\UserInterface\API\WGL">
+      <UniqueIdentifier>{88cb81e0-de93-4c98-bcbf-cefdc629bc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Win32\PlatformHeaders">
+      <UniqueIdentifier>{96049cbc-006c-4554-b45f-e3fd3a6aa897}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\RaspberryPi\PlatformBootstrapper.cpp">
+      <Filter>Source Files\Platforms\RaspberryPi</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\GNULinux\PlatformBootstrapper.cpp">
+      <Filter>Source Files\Platforms\GNULinux</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\Win32\PlatformBootstrapper.cpp">
+      <Filter>Source Files\Platforms\Win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Graphics\Graphics.hpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Node.hpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Updatable.hpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\WidgetBase.hpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Widgets.hpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Abstract.hpp">
+      <Filter>Source Files\Graphics\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Object.hpp">
+      <Filter>Source Files\Graphics\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\OperationVisitor.hpp">
+      <Filter>Source Files\Graphics\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Visitor.hpp">
+      <Filter>Source Files\Graphics\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Alpha.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Enabled.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Projection.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Rotate.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Scale.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\State\Translate.hpp">
+      <Filter>Source Files\Graphics\Abstract\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Resource\Bitmap.hpp">
+      <Filter>Source Files\Graphics\Abstract\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Resource\IResource.hpp">
+      <Filter>Source Files\Graphics\Abstract\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Resource\MotionVideo.hpp">
+      <Filter>Source Files\Graphics\Abstract\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Resource\Resource.hpp">
+      <Filter>Source Files\Graphics\Abstract\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Operation\Mesh.hpp">
+      <Filter>Source Files\Graphics\Abstract\Operation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Abstract\Operation\Sprite.hpp">
+      <Filter>Source Files\Graphics\Abstract\Operation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Renderer\GraphicsAPI.hpp">
+      <Filter>Source Files\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Renderer\Renderer.hpp">
+      <Filter>Source Files\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Tree\TreeObject.hpp">
+      <Filter>Source Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterface\Input.hpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterface\UserInterface.hpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterface\Window.hpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterface\WindowHints.hpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterface\Events\KeyEvents.hpp">
+      <Filter>Source Files\UserInterface\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\PlatformBootstrapper.hpp">
+      <Filter>Source Files\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLContext.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\EGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLDisplay.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\EGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLScreen.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\EGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLWindow.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\EGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Graphics.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\GraphicsAPI.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\TextureFactory.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\UsesTextureFactory.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Mesh\Mesh.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Sprite\Sprite.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\Bitmap.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideo.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\BasicShader.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\KnibShader.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\ShaderBase.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\ShaderFactory.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\Shaders.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\YUV420PShader.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\Source\Source.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Shaders\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\TexPak\TexPak.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\TexPak</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\RaspberryPi\UserInterface\UserInterface.hpp">
+      <Filter>Source Files\Platforms\RaspberryPi\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\RaspberryPi\UserInterface\Window.hpp">
+      <Filter>Source Files\Platforms\RaspberryPi\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\RaspberryPi\UserInterface\API\EGLDisplay.hpp">
+      <Filter>Source Files\Platforms\RaspberryPi\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\RaspberryPi\UserInterface\API\SocketInput.hpp">
+      <Filter>Source Files\Platforms\RaspberryPi\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\PlatformHeaders.hpp">
+      <Filter>Source Files\Platforms\GNULinux</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\Media\Media.hpp">
+      <Filter>Source Files\Platforms\GNULinux\Media</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\EGLWindowImplementation.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\GLXWindowImplementation.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\UserInterface.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\X11Display.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\X11Input.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\X11Window.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\GLX\GLXContext.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API\GLX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\GLX\GLXScreen.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API\GLX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\GLX\GLXWindow.hpp">
+      <Filter>Source Files\Platforms\GNULinux\UserInterface\API\GLX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\UserInterface\SDL\SDLWindowImplementation.hpp">
+      <Filter>Source Files\Platforms\Common\UserInterface\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Win32\UserInterface\API\WGL\WGLContext.hpp">
+      <Filter>Source Files\Platforms\Win32\UserInterface\API\WGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Win32\UserInterface\API\Win32Input.hpp">
+      <Filter>Source Files\Platforms\Win32\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Win32\UserInterface\API\Win32Window.hpp">
+      <Filter>Source Files\Platforms\Win32\UserInterface\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Win32\PlatformHeaders\PlatformHeaders.hpp">
+      <Filter>Source Files\Platforms\Win32\PlatformHeaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Platforms\RaspberryPi\Makefile.in">
+      <Filter>Source Files\Platforms\RaspberryPi</Filter>
+    </None>
+    <None Include="src\Platforms\GNULinux\Makefile.in">
+      <Filter>Source Files\Platforms\GNULinux</Filter>
+    </None>
+  </ItemGroup>
+</Project>

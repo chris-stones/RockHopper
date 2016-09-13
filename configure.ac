@@ -2,9 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(update_popup, 0.1, chris.stones@zoho.com)
+AC_INIT(RockHopper, 0.1, chris.stones@zoho.com)
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_SRCDIR(src/Popup.cpp)
+AC_CONFIG_SRCDIR(src/Main.cpp)
 AC_CONFIG_HEADERS(src/config.h)
 
 AC_CONFIG_MACRO_DIR([m4])
