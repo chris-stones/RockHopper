@@ -40,7 +40,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Program Files %28x86%29\KnibRead\include;C:\Program Files %28x86%29\rh_texure_loader\includes;C:\SDL2-2.0.3\include;C:\Program Files %28x86%29\glew-1.12.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\rh_texure_loader\libs;C:\Program Files %28x86%29\KnibRead\lib;C:\Program Files %28x86%29\glew-1.12.0\lib\Release\Win32;C:\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files %28x86%29\rh_texure_loader\libs;C:\Program Files %28x86%29\KnibRead\lib;C:\Program Files %28x86%29\glew-1.12.0\lib\Release\Win32;C:\SDL2-2.0.3\lib\x86;C:\Work\CODEC\lib\ogg;C:\Work\CODEC\lib\theora;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\rh_texure_loader\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\rh_texure_loader\libs;C:\Program Files %28x86%29\KnibRead\lib;C:\Program Files %28x86%29\glew-1.12.0\lib\Release\Win32;C:\SDL2-2.0.3\lib\x86;C:\Work\CODEC\lib\ogg;C:\Work\CODEC\lib\theora;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -49,10 +53,11 @@
       <SDLCheck>true</SDLCheck>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)../include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HAVE_SDL2=1;HAVE_MOTIONVIDEO_PROVIDER=1;HAVE_THEORA_VIDEO=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;SDL2.lib;KnibRead.lib;rh_texture_loader.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;SDL2.lib;KnibRead.lib;rh_texture_loader.lib;libogg_static.lib;libtheora_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -62,20 +67,26 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;HAVE_SDL2=1;HAVE_MOTIONVIDEO_PROVIDER=1;HAVE_THEORA_VIDEO=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)../include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;SDL2.lib;KnibRead.lib;rh_texture_loader.lib;libogg_static.lib;libtheora_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Libs\IoCC\IoCC.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Platforms\GNULinux\PlatformBootstrapper.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Platforms\RaspberryPi\PlatformBootstrapper.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Platforms\Win32\PlatformBootstrapper.cpp" />
   </ItemGroup>
@@ -103,6 +114,13 @@
     <ClInclude Include="src\Graphics\Updatable.hpp" />
     <ClInclude Include="src\Graphics\WidgetBase.hpp" />
     <ClInclude Include="src\Graphics\Widgets.hpp" />
+    <ClInclude Include="src\Libs\Concurrency\Concurrency.hpp" />
+    <ClInclude Include="src\Libs\Concurrency\ConcurrentJobQueue.hpp" />
+    <ClInclude Include="src\Libs\Concurrency\IConcurrentJob.hpp" />
+    <ClInclude Include="src\Libs\Concurrency\IConcurrentJobQueue.hpp" />
+    <ClInclude Include="src\Libs\EventDispatcher\EventDispatcher.hpp" />
+    <ClInclude Include="src\Libs\GLM\glm.hpp" />
+    <ClInclude Include="src\Libs\IoCC\IoCC.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLContext.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLDisplay.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\EGL\EGLScreen.hpp" />
@@ -112,6 +130,8 @@
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Mesh\Mesh.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\Bitmap.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideo.hpp" />
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines\Knib.hpp" />
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines\Theora.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\BasicShader.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\KnibShader.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Shaders\ShaderBase.hpp" />
@@ -124,7 +144,6 @@
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\TextureFactory.hpp" />
     <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\UsesTextureFactory.hpp" />
     <ClInclude Include="src\Platforms\Common\UserInterface\SDL\SDLWindowImplementation.hpp" />
-    <ClInclude Include="src\Platforms\GNULinux\Media\Media.hpp" />
     <ClInclude Include="src\Platforms\GNULinux\PlatformHeaders.hpp" />
     <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\GLX\GLXContext.hpp" />
     <ClInclude Include="src\Platforms\GNULinux\UserInterface\API\GLX\GLXScreen.hpp" />

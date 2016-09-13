@@ -17,21 +17,21 @@ RH::Libs::EventDispatcher::DirectDispatcher RH::UI::InputSubscriberBase::inputSu
 namespace RH {
 	namespace Platform {
 
-		class PlatformBootstrapper::Impl {
+		class PlatformBootstrapper::Impl : public RH::Libs::IoCCBase {
 
-			void DistributeTextureFactory() {
+			void CreateTextureFactory() {
 
-				glewInit();
+				std::shared_ptr<::RH::Graphics::TextureFactory> tf =
+					std::make_shared<::RH::Graphics::TextureFactory>();
 
-				TextureFactory_ * tf = new TextureFactory_();
-
-				UsesTextureFactory_::SetTextureFactory(tf);
+				this->container.Store(tf);
 			}
 
 		public:
 			Impl() {
 
-				DistributeTextureFactory();
+				glewInit();
+				CreateTextureFactory();
 			}
 		};
 

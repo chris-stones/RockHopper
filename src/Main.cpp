@@ -101,6 +101,7 @@ public:
 	}
 };
 
+/*
 class PulseEffect
 	:	public VisualEffect
 {
@@ -130,11 +131,11 @@ public:
 
 		if(!finished) {
 
-			f+=0.02;
+			f+=0.02f;
 //			node0.lock()->SetScale( 1.0f + sin(f) * 0.5 );
 //			node1.lock()->SetScale( 1.0f + sin(f) * 0.5 );
 
-			parent->SetScale( 1.0f + sin(f) * 0.5 );
+			parent->SetScale( 1.0f + sin(f) * 0.5f );
 
 			if(++frame >= 180) {
 				finished = true;
@@ -143,7 +144,7 @@ public:
 		}
 	}
 };
-
+*/
 
 
 class MyScene

@@ -121,6 +121,21 @@
     <Filter Include="Source Files\Platforms\Win32\PlatformHeaders">
       <UniqueIdentifier>{96049cbc-006c-4554-b45f-e3fd3a6aa897}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Libs\Concurrency">
+      <UniqueIdentifier>{9f3d085a-4147-4fa7-b444-74ec667c947d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs\EventDispatcher">
+      <UniqueIdentifier>{0f4d7f9b-3a2c-4f8f-bedf-b50589ffb497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs\GLM">
+      <UniqueIdentifier>{528bdf87-c9d4-4a91-b0db-18e72a1b42a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs\IoCC">
+      <UniqueIdentifier>{44c39c6e-853e-466c-b94f-de6e8161f16d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines">
+      <UniqueIdentifier>{1e417e3c-0206-49cb-97ac-634088afe85f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -134,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="src\Platforms\Win32\PlatformBootstrapper.cpp">
       <Filter>Source Files\Platforms\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Libs\IoCC\IoCC.cpp">
+      <Filter>Source Files\Libs\IoCC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,9 +320,6 @@
     <ClInclude Include="src\Platforms\GNULinux\PlatformHeaders.hpp">
       <Filter>Source Files\Platforms\GNULinux</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\GNULinux\Media\Media.hpp">
-      <Filter>Source Files\Platforms\GNULinux\Media</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platforms\GNULinux\UserInterface\EGLWindowImplementation.hpp">
       <Filter>Source Files\Platforms\GNULinux\UserInterface</Filter>
     </ClInclude>
@@ -346,6 +361,33 @@
     </ClInclude>
     <ClInclude Include="src\Platforms\Win32\PlatformHeaders\PlatformHeaders.hpp">
       <Filter>Source Files\Platforms\Win32\PlatformHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\IoCC\IoCC.hpp">
+      <Filter>Source Files\Libs\IoCC</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\GLM\glm.hpp">
+      <Filter>Source Files\Libs\GLM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\EventDispatcher\EventDispatcher.hpp">
+      <Filter>Source Files\Libs\EventDispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\Concurrency\Concurrency.hpp">
+      <Filter>Source Files\Libs\Concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\Concurrency\ConcurrentJobQueue.hpp">
+      <Filter>Source Files\Libs\Concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\Concurrency\IConcurrentJob.hpp">
+      <Filter>Source Files\Libs\Concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libs\Concurrency\IConcurrentJobQueue.hpp">
+      <Filter>Source Files\Libs\Concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines\Knib.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines\Theora.hpp">
+      <Filter>Source Files\Platforms\Common\Graphics\OpenGL\Resource\MotionVideoEngines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
